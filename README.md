@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hoa & Khoảnh Khắc – landing page 20/10 và trang "Mãi Yêu"
 
-## Getting Started
+Website tĩnh (Next.js, `output: "export"`). Không có server, không có database.
+Build xong, toàn bộ site nằm trong thư mục `out/` và có thể đưa lên bất kỳ hosting tĩnh nào
+(Cloudflare Pages, Netlify, Vercel, GitHub Pages, hoặc một VPS chạy nginx).
 
-First, run the development server:
+## Chạy thử
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # xuất site tĩnh ra ./out
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Cấu trúc
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Đường dẫn | Nội dung |
+| --- | --- |
+| `/` | Landing page quảng bá, 3 gói Hoa Nhớ / Khoảnh Khắc / Mãi Yêu, đặt hàng qua Zalo / SĐT / Facebook |
+| `/<ten-anh>-and-<ten-em>/<ma-rieng>/` | Trang Mãi Yêu cho một cặp đôi, chỉ ai có link (hoặc quét QR) mới mở được |
+| `/minh-and-tra/demo/` | Trang demo được nhúng trong khung điện thoại ở landing |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Thông tin liên hệ, giá gói, ngày giao chỉnh trong `src/lib/site.ts`.
 
-## Learn More
+## Tạo một trang Mãi Yêu mới
 
-To learn more about Next.js, take a look at the following resources:
+Mỗi trang là một file JSON trong `content/stories/`. Cách nhanh nhất:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm story:new "Minh" "Trà"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Lệnh này tạo:
 
-## Deploy on Vercel
+- `content/stories/minh-and-tra.<token>.json` – nội dung trang, đang để `"isPublished": false`
+- `public/stories/minh-and-tra/` – thư mục chứa ảnh
+- `public/stories/minh-and-tra/qr-<token>.png` – mã QR in lên thiệp, trỏ tới URL thật
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Sau đó:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Bỏ ảnh vào thư mục ảnh: `cover.jpg` (ảnh hai bạn) và `photo-1.jpg` … `photo-5.jpg`.
+2. Mở file JSON, điền `anniversaryDate` (dạng `YYYY-MM-DD`), `intro`, `fiveThings` (5 dòng),
+   `thanks`, `wishes`, `letter`, và `caption` cho từng ảnh. Có thể thêm `voiceUrl` (file .mp3 ghi âm)
+   và `musicUrl` (nhạc nền) nếu muốn, đặt file trong cùng thư mục ảnh.
+3. Đổi `"isPublished": true`.
+4. `pnpm build` rồi deploy lại thư mục `out/`.
+
+Muốn ẩn một trang, đặt `isPublished` về `false` và build lại. Muốn đổi mã riêng, sửa `token` trong
+JSON, đổi tên file cho khớp, rồi chạy `pnpm story:qr` để tạo lại QR.
+
+Khi đã có tên miền thật, đặt biến `NEXT_PUBLIC_SITE_URL` trước khi build và tạo QR:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://ten-mien-cua-ban.vn pnpm story:qr
+NEXT_PUBLIC_SITE_URL=https://ten-mien-cua-ban.vn pnpm build
+```
+
+## Các cảnh trong trang Mãi Yêu
+
+Phong bì sáp niêm (chữ cái đầu tên cô ấy) → thiệp trêu "khoan mở vội" → kỷ niệm + đếm ngày bên nhau →
+ba trái tim ren (5 điều anh thích ở em, cảm ơn em, chúc em) → bó hoa bằng ảnh → album polaroid → lá thư.
+Cảnh nào không có nội dung sẽ tự được bỏ qua.
+
+## Deploy lên hosting tĩnh
+
+- **Cloudflare Pages / Netlify / Vercel**: build command `pnpm build`, output directory `out`.
+- **nginx**: copy `out/` lên server, trỏ `root` vào đó, bật `try_files $uri $uri/ /404.html;`.

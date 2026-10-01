@@ -1,0 +1,30 @@
+{
+  "slug": "minh-and-tra",
+  "token": "demo",
+  "hisName": "Minh",
+  "herName": "Trà",
+  "title": "Dear my angel",
+  "anniversaryDate": "2023-12-02",
+  "intro": "Anh không giỏi nói những điều hoa mỹ, nên anh làm trang này để nói thay.",
+  "fiveThings": [
+    "Nụ cười của em lúc em cố nhịn cười",
+    "Cách em nhớ hết những chuyện nhỏ xíu anh kể",
+    "Em luôn nói \"đi cẩn thận\" trước khi anh ra khỏi nhà",
+    "Em giận rất nhanh và cũng quên rất nhanh",
+    "Em làm mọi thứ xung quanh anh nhẹ nhàng hơn"
+  ],
+  "thanks": "Cảm ơn em vì luôn ở bên anh, vì sự kiên nhẫn và chưa từng bỏ cuộc. Ở cạnh em, mọi thứ nhẹ nhàng hơn, và anh cũng dần trở nên tốt hơn mỗi ngày.",
+  "wishes": "Chúc em ngày 20/10 thật dịu dàng, rực rỡ và luôn được yêu thương như cách em xứng đáng.",
+  "letter": "Trà xinh của anh,\n\nAnh không giỏi nói những điều hoa mỹ, chỉ là thật lòng rất trân trọng những gì tụi mình đã có. Mong là mình sẽ còn cùng nhau đi thật lâu nữa nha!\n\nYêu em.",
+  "coverUrl": "/stories/minh-and-tra/cover.jpg",
+  "photos": [
+    { "url": "/stories/minh-and-tra/photo-1.jpg", "caption": "Lần đầu đi chơi xa" },
+    { "url": "/stories/minh-and-tra/photo-2.jpg", "caption": "Đồ đôi" },
+    { "url": "/stories/minh-and-tra/photo-3.jpg", "caption": "Sinh nhật em" },
+    { "url": "/stories/minh-and-tra/photo-4.jpg", "caption": "Chiều mưa ở quán cũ" },
+    { "url": "/stories/minh-and-tra/photo-5.jpg", "caption": "Tết năm ngoái" }
+  ],
+  "voiceUrl": null,
+  "musicUrl": null,
+  "isPublished": true
+}
