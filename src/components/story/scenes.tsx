@@ -36,7 +36,7 @@ export function TeaserScene({ story, onNext }: SceneProps) {
   const [picked, setPicked] = useState<number | null>(null);
   const face = picked === null ? null : TEASER_FACES[picked];
   return (
-    <div className="lace-card anim-rise mx-auto max-w-sm px-7 py-9 text-center">
+    <div data-scene className="lace-card mx-auto max-w-sm px-7 py-9 text-center">
       {face === null ? (
         <>
           <p className="font-display text-xl">Khoan mở vội.</p>
@@ -78,7 +78,7 @@ export function AnniversaryScene({ story, onNext }: SceneProps) {
   const elapsed = useElapsed(story.anniversaryDate);
   return (
     <div className="flex flex-col items-center gap-9 text-center">
-      <div className="lace-card anim-rise flex flex-col items-center gap-5 px-7 py-7 sm:flex-row sm:text-left">
+      <div data-scene className="lace-card flex flex-col items-center gap-5 px-7 py-7 sm:flex-row sm:text-left">
         {story.coverUrl ? (
           <Polaroid
             url={story.coverUrl}
@@ -114,7 +114,7 @@ const COUNTER_CELLS: [keyof Elapsed, string][] = [
 
 function TogetherCounter({ elapsed }: { elapsed: Elapsed }) {
   return (
-    <div className="anim-rise" style={{ animationDelay: "300ms" }}>
+    <div data-scene className="" style={{ animationDelay: "300ms" }}>
       <p className="font-script text-4xl text-pearl-bright">Mình đã bên nhau</p>
       <div className="mt-4 flex items-end justify-center gap-2 font-display text-pearl-bright">
         {COUNTER_CELLS.map(([key, label], i) => (
@@ -171,7 +171,7 @@ export function HeartsScene({ story, onNext }: SceneProps) {
   if (open) {
     const label = HEARTS.find((h) => h.key === open)?.label ?? "";
     return (
-      <div className="lace-card anim-rise mx-auto max-w-sm px-7 py-8">
+      <div data-scene className="lace-card mx-auto max-w-sm px-7 py-8">
         <p className="mb-5 text-center font-script text-4xl text-rose-deep">{label}</p>
         <HeartContent story={story} which={open} />
         <div className="mt-7 flex justify-center">
@@ -182,10 +182,10 @@ export function HeartsScene({ story, onNext }: SceneProps) {
   }
   return (
     <div className="flex flex-col items-center gap-8 text-center">
-      <p className="anim-rise font-script text-5xl text-pearl-bright">Chọn một trái tim</p>
+      <p data-scene className=" font-script text-5xl text-pearl-bright">Chọn một trái tim</p>
       <div className="flex flex-wrap justify-center gap-2 sm:gap-6">
-        {available.map((h, i) => (
-          <LaceHeart key={h.key} label={h.label} onClick={() => handleOpen(h.key)} delayMs={i * 120} />
+        {available.map((h) => (
+          <LaceHeart key={h.key} label={h.label} onClick={() => handleOpen(h.key)} />
         ))}
       </div>
       <p className="font-display text-sm italic text-petal-soft/70">
@@ -199,8 +199,8 @@ export function HeartsScene({ story, onNext }: SceneProps) {
 export function BouquetScene({ story, onNext }: SceneProps) {
   return (
     <div className="flex flex-col items-center gap-6 text-center">
-      <p className="anim-rise font-script text-5xl text-pearl-bright">Hoa cho em</p>
-      <div className="anim-rise" style={{ animationDelay: "200ms" }}>
+      <p data-scene className=" font-script text-5xl text-pearl-bright">Hoa cho em</p>
+      <div data-scene className="" style={{ animationDelay: "200ms" }}>
         <Bouquet photos={story.photos} />
       </div>
       <NextButton onClick={onNext} />
@@ -213,7 +213,7 @@ const TILTS = [-6, 5, -3, 7, -5, 4];
 export function MemoriesScene({ story, onNext }: SceneProps) {
   return (
     <div className="flex flex-col items-center gap-8 text-center">
-      <p className="anim-rise font-script text-5xl text-pearl-bright">Full of memories</p>
+      <p data-scene className=" font-script text-5xl text-pearl-bright">Full of memories</p>
       <div className="flex max-w-md flex-wrap items-start justify-center gap-x-5 gap-y-8">
         {story.photos.map((p, i) => (
           <Polaroid key={p.url} url={p.url} caption={p.caption} tilt={TILTS[i % TILTS.length]} />
@@ -227,7 +227,7 @@ export function MemoriesScene({ story, onNext }: SceneProps) {
 export function LetterScene({ story }: { story: Story }) {
   const locket = [story.coverUrl, story.photos[0]?.url].filter(Boolean) as string[];
   return (
-    <div className="lace-card anim-rise mx-auto max-w-md px-7 py-9">
+    <div data-scene className="lace-card mx-auto max-w-md px-7 py-9">
       <div className="flex items-start justify-between gap-4">
         <p className="whitespace-pre-line font-display text-lg leading-relaxed">{story.letter}</p>
         {locket.length > 0 ? (

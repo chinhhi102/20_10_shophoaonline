@@ -23,15 +23,15 @@ export function EventCountdown({ targetIso }: { targetIso: string }) {
     ["phút", left?.minutes ?? null],
   ];
   return (
-    <div className="flex items-end gap-3 font-display text-pearl-bright">
+    <div className="flex items-end gap-3 font-display text-plum">
       {cells.map(([label, value], i) => (
         <div key={label} className="flex items-end gap-3">
-          {i > 0 ? <span className="pb-5 text-2xl text-petal">:</span> : null}
-          <div className="text-center">
+          {i > 0 ? <span className="pb-6 text-3xl text-rose">·</span> : null}
+          <div className="rounded-3xl bg-white/70 px-4 py-3 text-center shadow-[0_16px_30px_-20px_rgba(91,36,64,0.5)]">
             <p className="text-4xl tabular-nums leading-none sm:text-5xl">
               {value === null ? "--" : String(value).padStart(2, "0")}
             </p>
-            <p className="mt-1.5 text-[11px] uppercase tracking-[0.25em] text-petal-soft/80">{label}</p>
+            <p className="mt-1.5 text-[11px] uppercase tracking-[0.25em] text-ink-soft">{label}</p>
           </div>
         </div>
       ))}

@@ -23,17 +23,16 @@ const PHONE_ICON = (
   </svg>
 );
 
-/** Ba cách đặt hàng: gọi, Zalo, Facebook. Dùng chung cho hero, phần đặt hàng và footer. */
+/** Ba cách đặt hàng: Zalo, gọi, Facebook. Dùng chung cho hero, phần đặt hàng và footer. */
 export function ContactLinks({ variant = "light", compact = false }: ContactLinksProps) {
   const dark = variant === "dark";
   const base =
-    "inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-3 text-sm font-medium transition";
-  const primary = dark
-    ? "bg-rose text-white hover:bg-rose-deep"
-    : "bg-rose text-white shadow-[0_14px_30px_-12px_rgba(200,83,111,0.9)] hover:bg-rose-deep";
+    "inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5";
+  const primary =
+    "bg-gradient-to-r from-rose to-rose-deep text-white shadow-[0_18px_36px_-14px_rgba(232,112,138,0.9)] hover:shadow-[0_22px_40px_-12px_rgba(232,112,138,1)]";
   const secondary = dark
-    ? "border border-pearl/40 text-pearl-bright hover:border-pearl hover:bg-white/5"
-    : "border border-petal bg-white/70 text-ink hover:border-rose hover:bg-white";
+    ? "border border-blush/30 text-blush hover:border-blush/70 hover:bg-white/5"
+    : "bg-white/80 text-plum shadow-[0_12px_30px_-18px_rgba(91,36,64,0.5)] hover:bg-white";
   return (
     <div className={`flex flex-wrap gap-3 ${compact ? "" : "sm:gap-4"}`}>
       <a href={SITE.zaloUrl} target="_blank" rel="noopener" className={`${base} ${primary}`}>

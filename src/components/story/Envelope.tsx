@@ -23,15 +23,15 @@ export function Envelope({ title, herName, initial, onOpened }: EnvelopeProps) {
 
   return (
     <div className="flex flex-col items-center gap-10">
-      <h1 className="anim-rise font-script text-5xl text-pearl-bright sm:text-6xl">
+      <h1 data-scene className="font-script text-5xl text-pearl-bright sm:text-6xl">
         {title}
       </h1>
       <button
         type="button"
         onClick={handleOpen}
         aria-label={`Mở phong bì gửi ${herName}`}
-        className="anim-rise relative h-[200px] w-[300px] cursor-pointer sm:h-[230px] sm:w-[340px]"
-        style={{ animationDelay: "200ms", perspective: "900px" }}
+        data-scene className="relative h-[200px] w-[300px] cursor-pointer sm:h-[230px] sm:w-[340px]"
+        style={{ perspective: "900px" }}
       >
         <div className="absolute inset-0 rounded-md bg-[#f7f1ec] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)]" />
         <div
@@ -63,8 +63,7 @@ export function Envelope({ title, herName, initial, onOpened }: EnvelopeProps) {
         </span>
       </button>
       <p
-        className="anim-rise font-display text-lg italic text-petal-soft/80"
-        style={{ animationDelay: "400ms" }}
+        data-scene className="font-display text-lg italic text-petal-soft/80"
       >
         {isOpen ? "Đang mở…" : "Chạm vào sáp để mở"}
       </p>

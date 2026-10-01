@@ -2,7 +2,9 @@
 
 import { useRef, useState } from "react";
 
+import { Petals } from "@/components/motion/Petals";
 import { Envelope } from "@/components/story/Envelope";
+import { SceneFrame } from "@/components/story/SceneFrame";
 import {
   AnniversaryScene,
   BouquetScene,
@@ -82,8 +84,16 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
           "radial-gradient(ellipse at 50% 0%, rgba(200,83,111,0.28), transparent 60%), radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.5), transparent 60%)",
       }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/img/lily-dark.jpg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
+      />
+      <Petals count={12} tone="dark" />
       {story.musicUrl ? <MusicToggle src={story.musicUrl} /> : null}
-      <div key={current} className="w-full max-w-lg">
+      <SceneFrame sceneKey={current}>
         {current === "envelope" ? (
           <Envelope title={story.title} herName={story.herName} initial={initial} onOpened={goNext} />
         ) : null}
@@ -98,9 +108,9 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
             <Credit />
           </>
         ) : null}
-      </div>
+      </SceneFrame>
       {index > 1 ? (
-        <nav className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-4 text-xs text-petal-soft/70">
+        <nav className="relative z-10 mt-8 flex items-center justify-center gap-4 text-xs text-petal-soft/70">
           <button type="button" onClick={goBack} className="underline underline-offset-4">
             Quay lại
           </button>

@@ -1,22 +1,31 @@
 @import "tailwindcss";
 
 /*
-  Bảng màu rút từ chính sản phẩm: ly ren hồng bọc giấy trắng, phong bì sáp niêm,
-  và nền đỏ rượu của trang kể chuyện.
+  Bảng màu v2: lấy từ ảnh thật trên site. Giấy gói hồng phấn, cánh hoa đào, hồng đậm
+  của nụ hoa, mận chín cho phần tối, vàng nhạt của nhuỵ.
 */
 :root {
-  --lace: #fbf5f1;
-  --lace-deep: #f3e7e1;
-  --petal: #f4c9d3;
-  --petal-soft: #fae3e8;
-  --rose: #c8536f;
-  --rose-deep: #a63d57;
+  --cream: #fff8f3;
+  --blush: #ffe4ea;
+  --blush-deep: #ffd3dd;
+  --peach: #ffdccb;
+  --rose: #e8708a;
+  --rose-deep: #c94c6b;
+  --plum: #5b2440;
+  --plum-deep: #3f1530;
+  --ink: #3a2430;
+  --ink-soft: #7a5a66;
+  --gold: #e7c78a;
+  --gold-soft: #f6e7c6;
+
+  /* giữ cho trang kể chuyện */
   --wine: #4b1020;
   --wine-deep: #35091a;
-  --ink: #2e1b21;
-  --ink-soft: #6b5159;
+  --petal: #f4c9d3;
+  --petal-soft: #fae3e8;
   --pearl: #d9c7a6;
   --pearl-bright: #efe3c8;
+  --lace: #fbf5f1;
 
   --font-script: var(--font-great-vibes), cursive;
   --font-display: var(--font-cormorant), "Times New Roman", serif;
@@ -24,18 +33,25 @@
 }
 
 @theme inline {
-  --color-lace: var(--lace);
-  --color-lace-deep: var(--lace-deep);
-  --color-petal: var(--petal);
-  --color-petal-soft: var(--petal-soft);
+  --color-cream: var(--cream);
+  --color-blush: var(--blush);
+  --color-blush-deep: var(--blush-deep);
+  --color-peach: var(--peach);
   --color-rose: var(--rose);
   --color-rose-deep: var(--rose-deep);
-  --color-wine: var(--wine);
-  --color-wine-deep: var(--wine-deep);
+  --color-plum: var(--plum);
+  --color-plum-deep: var(--plum-deep);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-wine: var(--wine);
+  --color-wine-deep: var(--wine-deep);
+  --color-petal: var(--petal);
+  --color-petal-soft: var(--petal-soft);
   --color-pearl: var(--pearl);
   --color-pearl-bright: var(--pearl-bright);
+  --color-lace: var(--lace);
   --font-script: var(--font-script);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -46,15 +62,16 @@ html {
 }
 
 body {
-  background: var(--lace);
+  background: var(--cream);
   color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--petal);
-  color: var(--wine);
+  background: var(--blush-deep);
+  color: var(--plum);
 }
 
 :focus-visible {
@@ -62,36 +79,70 @@ body {
   outline-offset: 3px;
 }
 
-/* ---------- Hoạ tiết ren: viền scallop dùng làm đường chia section ---------- */
-.lace-edge {
-  --lace-size: 22px;
-  --lace-color: var(--lace);
-  position: relative;
-  z-index: 2;
+/* ---------- Khối mềm: blob đổi dạng chậm ---------- */
+@keyframes blob-morph {
+  0%,
+  100% {
+    border-radius: 58% 42% 55% 45% / 50% 60% 40% 50%;
+  }
+  33% {
+    border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%;
+  }
+  66% {
+    border-radius: 52% 48% 60% 40% / 42% 55% 45% 58%;
+  }
 }
-.lace-edge::after {
-  content: "";
+.blob {
+  border-radius: 58% 42% 55% 45% / 50% 60% 40% 50%;
+  animation: blob-morph 18s ease-in-out infinite;
+}
+.blob-slow {
+  animation-duration: 28s;
+  animation-direction: reverse;
+}
+
+/* Ảnh cắt theo khối mềm, không bao giờ vuông */
+.soft-photo {
+  overflow: hidden;
+  border-radius: 48% 52% 44% 56% / 56% 42% 58% 44%;
+}
+
+/* Thẻ mềm */
+.soft-card {
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 2rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 30px 60px -32px rgba(91, 36, 64, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+/* Nền mờ dạng ánh sáng xuyên cánh hoa */
+.glow {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(var(--lace-size) * -1);
-  height: var(--lace-size);
-  background: radial-gradient(
-    circle at 50% 0,
-    var(--lace-color) calc(var(--lace-size) * 0.5),
-    transparent calc(var(--lace-size) * 0.5 + 1px)
-  );
-  background-size: var(--lace-size) var(--lace-size);
-  background-repeat: repeat-x;
+  filter: blur(60px);
+  opacity: 0.8;
   pointer-events: none;
 }
 
-/* Thẻ ren: khung trắng có viền scallop bao quanh */
+/* Marquee */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+/* ---------- Giữ cho trang kể chuyện ---------- */
 .lace-card {
   --lace-size: 14px;
   background: #fffaf7;
   color: var(--ink);
-  border-radius: 10px;
+  border-radius: 14px;
   box-shadow:
     0 0 0 6px #fffaf7,
     0 0 0 7px rgba(200, 83, 111, 0.18),
@@ -102,7 +153,7 @@ body {
   content: "";
   position: absolute;
   inset: -13px;
-  border-radius: 16px;
+  border-radius: 20px;
   background:
     radial-gradient(circle, #fffaf7 55%, transparent 56%) 0 0 / var(--lace-size) var(--lace-size)
       repeat-x,
@@ -116,7 +167,6 @@ body {
   opacity: 0.95;
 }
 
-/* Sáp niêm phong */
 .wax-seal {
   width: 76px;
   height: 76px;
@@ -124,14 +174,14 @@ body {
   display: grid;
   place-items: center;
   background:
-    radial-gradient(circle at 35% 30%, #e9a5b5 0, transparent 38%),
-    radial-gradient(circle at 70% 75%, #8e3047 0, transparent 45%),
-    #c8536f;
+    radial-gradient(circle at 35% 30%, #f3b4c3 0, transparent 38%),
+    radial-gradient(circle at 70% 75%, #9a3650 0, transparent 45%),
+    #d6617c;
   box-shadow:
     inset 0 0 0 5px rgba(255, 255, 255, 0.08),
     inset 0 2px 6px rgba(255, 255, 255, 0.35),
     inset 0 -4px 10px rgba(60, 10, 25, 0.55),
-    0 8px 18px -6px rgba(0, 0, 0, 0.6);
+    0 8px 18px -6px rgba(0, 0, 0, 0.5);
   font-family: var(--font-script);
   color: #fde7ee;
   font-size: 34px;
@@ -144,26 +194,15 @@ body {
   );
 }
 
-/* Polaroid */
 .polaroid {
   background: #fffdfb;
   padding: 10px 10px 34px;
+  border-radius: 6px;
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.25),
-    0 18px 40px -20px rgba(0, 0, 0, 0.7);
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 18px 40px -20px rgba(0, 0, 0, 0.6);
 }
 
-/* ---------- Chuyển động ---------- */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 @keyframes float {
   0%,
   100% {
@@ -178,23 +217,18 @@ body {
     transform: rotate(360deg);
   }
 }
-@keyframes shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
-}
-
-.anim-rise {
-  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
 .anim-float {
   animation: float 5s ease-in-out infinite;
 }
 .anim-spin-slow {
   animation: spin-slow 40s linear infinite;
+}
+
+/* Phần tử đợi GSAP hiện: ẩn trước khi JS chạy, nhưng vẫn hiện nếu JS không chạy. */
+@media (scripting: enabled) {
+  [data-reveal] {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -207,5 +241,8 @@ body {
   }
   html {
     scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1;
   }
 }

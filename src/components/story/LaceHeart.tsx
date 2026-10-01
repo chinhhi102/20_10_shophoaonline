@@ -1,20 +1,18 @@
 interface LaceHeartProps {
   label: string;
   onClick: () => void;
-  delayMs?: number;
 }
 
 const HEART_PATH =
   "M50 88 C20 66, 4 50, 4 32 C4 18, 15 8, 28 8 C37 8, 45 13, 50 21 C55 13, 63 8, 72 8 C85 8, 96 18, 96 32 C96 50, 80 66, 50 88 Z";
 
 /** Trái tim ren trắng, bấm để mở một mục. */
-export function LaceHeart({ label, onClick, delayMs = 0 }: LaceHeartProps) {
+export function LaceHeart({ label, onClick }: LaceHeartProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="anim-rise group flex flex-col items-center gap-3 rounded-2xl p-2 transition-transform hover:-translate-y-1 focus-visible:-translate-y-1"
-      style={{ animationDelay: `${delayMs}ms` }}
+      data-scene className="group flex flex-col items-center gap-3 rounded-2xl p-2 transition-transform hover:-translate-y-1 focus-visible:-translate-y-1"
     >
       <svg viewBox="0 0 100 100" className="h-28 w-28 drop-shadow-[0_12px_20px_rgba(0,0,0,0.45)]">
         <path
