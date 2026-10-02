@@ -115,12 +115,11 @@ body {
 
 /* Thẻ mềm */
 .soft-card {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.84);
   border-radius: 2rem;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 30px 60px -32px rgba(91, 36, 64, 0.35);
-  backdrop-filter: blur(8px);
 }
 
 /* Nền mờ dạng ánh sáng xuyên cánh hoa */

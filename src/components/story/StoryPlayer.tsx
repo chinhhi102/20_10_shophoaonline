@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 
+import { prefersReducedMotion, setupGsap } from "@/components/motion/gsap";
+
 import { Petals3D } from "@/components/three/Lazy3D";
 import { Envelope } from "@/components/story/Envelope";
 import { SceneFrame } from "@/components/story/SceneFrame";
@@ -72,9 +74,36 @@ function MusicToggle({ src }: { src: string }) {
 export function StoryPlayer({ story }: StoryPlayerProps) {
   const scenes = buildScenes(story);
   const [index, setIndex] = useState(0);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const isLeaving = useRef(false);
   const current = scenes[index];
-  const goNext = () => setIndex((i) => Math.min(i + 1, scenes.length - 1));
-  const goBack = () => setIndex((i) => Math.max(i - 1, 0));
+
+  /** Cảnh cũ trôi lên và mờ đi trước, rồi cảnh mới mới hiện ra. */
+  const transitionTo = (next: number) => {
+    const target = Math.max(0, Math.min(next, scenes.length - 1));
+    const el = frameRef.current;
+    if (target === index || isLeaving.current) {
+      return;
+    }
+    if (!el || prefersReducedMotion()) {
+      setIndex(target);
+      return;
+    }
+    isLeaving.current = true;
+    setupGsap().to(el, {
+      opacity: 0,
+      y: -22,
+      scale: 0.98,
+      duration: 0.32,
+      ease: "power2.in",
+      onComplete: () => {
+        isLeaving.current = false;
+        setIndex(target);
+      },
+    });
+  };
+  const goNext = () => transitionTo(index + 1);
+  const goBack = () => transitionTo(index - 1);
   const initial = story.herName.trim().charAt(0).toUpperCase() || "♥";
 
   return (
@@ -92,9 +121,9 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
       />
-      <Petals3D tone="dark" count={60} />
+      <Petals3D tone="dark" count={40} />
       {story.musicUrl ? <MusicToggle src={asset(story.musicUrl)} /> : null}
-      <SceneFrame sceneKey={current}>
+      <SceneFrame sceneKey={current} frameRef={frameRef}>
         {current === "envelope" ? (
           <Envelope title={story.title} herName={story.herName} initial={initial} onOpened={goNext} />
         ) : null}

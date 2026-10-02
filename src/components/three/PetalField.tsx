@@ -124,10 +124,11 @@ function Petals({ count, tone }: Required<PetalFieldProps>) {
 /** Cánh hoa rơi trong không gian 3D, nghiêng theo chạm hoặc chuột. Nền trong suốt, đặt đè lên section. */
 export function PetalField({ tone = "light", count }: PetalFieldProps) {
   const fog = tone === "light" ? "#fff3ee" : "#3f0f1d";
-  const n = count ?? (typeof window !== "undefined" && window.innerWidth < 640 ? 70 : 130);
+  const isPhone = typeof window !== "undefined" && window.innerWidth < 640;
+  const n = count ?? (isPhone ? 50 : 130);
   return (
     <Canvas
-      dpr={[1, 1.5]}
+      dpr={isPhone ? 1 : [1, 1.5]}
       camera={{ position: [0, 0, 8], fov: 50 }}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
       style={{ position: "absolute", inset: 0, pointerEvents: "none" }}

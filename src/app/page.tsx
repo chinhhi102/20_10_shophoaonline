@@ -1,3 +1,4 @@
+import { AutoHideHeader } from "@/components/landing/AutoHideHeader";
 import { ContactLinks } from "@/components/landing/ContactLinks";
 import { EventCountdown } from "@/components/landing/EventCountdown";
 import { Marquee } from "@/components/landing/Marquee";
@@ -91,8 +92,8 @@ function SectionTitle({ children, light = false }: { children: React.ReactNode; 
 
 function Header() {
   return (
-    <header className="sticky top-3 z-30 px-3 sm:top-4 sm:px-4">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full bg-cream/85 py-2 pl-4 pr-2 shadow-[0_18px_40px_-24px_rgba(91,36,64,0.45)] backdrop-blur">
+    <AutoHideHeader className="sticky top-3 z-30 px-3 sm:top-4 sm:px-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full bg-cream/92 py-1.5 pl-4 pr-1.5 shadow-[0_18px_40px_-24px_rgba(91,36,64,0.45)] sm:py-2 sm:pr-2 sm:backdrop-blur">
         <a href="#" className="whitespace-nowrap font-script text-[1.25rem] leading-none text-plum sm:text-3xl">
           {SITE.name}
         </a>
@@ -109,7 +110,7 @@ function Header() {
           Xem gói
         </a>
       </div>
-    </header>
+    </AutoHideHeader>
   );
 }
 
@@ -194,7 +195,7 @@ function Hero() {
 function Keeps() {
   return (
     <Reveal as="section" className="relative overflow-x-clip">
-      <div className="glow blob -right-32 top-20 h-[420px] w-[420px] bg-blush" />
+      <div className="glow blob -right-32 top-20 hidden h-[420px] w-[420px] bg-blush sm:block" />
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
         <div>
           <div data-reveal="up">
@@ -239,13 +240,10 @@ function Packages() {
             <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-[1.05rem] text-ink sm:text-lg sm:text-ink-soft">
               Cả ba gói đều có hoa tươi và thiệp in hình. Khác nhau ở thứ cô ấy giữ lại được sau ngày 20/10.
             </p>
-            <p className="mt-3 text-base font-medium text-rose-deep lg:hidden">Vuốt ngang để xem từng gói →</p>
-          </div>
-          <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 pt-6 [scrollbar-width:none] lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:px-5 lg:pb-0">
+                      </div>
+          <div className="mt-8 grid gap-6 px-4 sm:px-5 lg:mt-14 lg:grid-cols-3 lg:gap-8">
             {PACKAGES.map((pkg, i) => (
-              <div key={pkg.id} className="w-[86%] shrink-0 snap-center sm:w-[70%] lg:w-auto">
-                <PackageCard pkg={pkg} photo={asset(PACKAGE_PHOTOS[pkg.id])} index={i} />
-              </div>
+              <PackageCard key={pkg.id} pkg={pkg} photo={asset(PACKAGE_PHOTOS[pkg.id])} index={i} />
             ))}
           </div>
         </div>
@@ -341,7 +339,7 @@ function Timeline() {
   return (
     <Reveal as="section" className="relative scroll-mt-24 overflow-x-clip">
       <div id="lich" className="absolute -top-24" />
-      <div className="glow blob -left-24 bottom-0 h-[380px] w-[380px] bg-peach" />
+      <div className="glow blob -left-24 bottom-0 hidden h-[380px] w-[380px] bg-peach sm:block" />
       <div className="relative mx-auto grid max-w-6xl gap-8 px-5 py-16 lg:grid-cols-[1fr_1.3fr] lg:items-center lg:py-20">
         <div data-reveal="left" className="rounded-[2.5rem] bg-gradient-to-br from-peach via-blush to-cream p-6 shadow-[0_40px_80px_-40px_rgba(91,36,64,0.4)] sm:p-10">
           <Eyebrow>Còn lại đến 20/10</Eyebrow>

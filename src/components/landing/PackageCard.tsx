@@ -13,14 +13,14 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
   return (
     <article
       data-reveal="up"
-      className={`group relative flex flex-col overflow-hidden rounded-[2.2rem] transition-transform duration-500 hover:-translate-y-2 ${
+      className={`group relative flex flex-col overflow-hidden rounded-[2.2rem] lg:transition-transform lg:duration-500 lg:hover:-translate-y-2 ${
         featured
           ? "bg-plum text-cream shadow-[0_40px_80px_-30px_rgba(63,21,48,0.7)] lg:-translate-y-5 lg:hover:-translate-y-7"
           : "bg-white/80 text-ink shadow-[0_30px_60px_-30px_rgba(91,36,64,0.35)]"
       }`}
       style={{ transitionDelay: `${index * 40}ms` }}
     >
-      <div className="relative h-56 overflow-hidden sm:h-60" style={{ borderRadius: "0 0 55% 45% / 0 0 22% 22%" }}>
+      <div className="relative h-60 overflow-hidden sm:h-64" style={{ borderRadius: "0 0 55% 45% / 0 0 22% 22%" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={photo}
@@ -38,13 +38,13 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
           {pkg.level}
         </span>
       </div>
-      <div className="flex flex-1 flex-col px-8 pb-9 pt-2">
-        <h3 className={`whitespace-nowrap font-script text-[2.8rem] leading-none ${featured ? "text-gold-soft" : "text-plum"}`}>{pkg.name}</h3>
+      <div className="flex flex-1 flex-col px-6 pb-8 pt-2 sm:px-8 sm:pb-9">
+        <h3 className={`whitespace-nowrap font-script text-[2.6rem] leading-none ${featured ? "text-gold-soft" : "text-plum"}`}>{pkg.name}</h3>
         <p className="mt-3 font-display text-[1.6rem] font-semibold">
           {formatVnd(pkg.priceFrom)} <span className={`text-base ${muted}`}>– {formatVnd(pkg.priceTo)}</span>
         </p>
-        <p className={`mt-3 text-[1.05rem] leading-relaxed ${muted}`}>{pkg.promise}</p>
-        <ul className="mt-5 space-y-2.5 text-[1.05rem]">
+        <p className={`mt-3 text-[1rem] leading-relaxed ${muted}`}>{pkg.promise}</p>
+        <ul className="mt-4 space-y-2 text-[1rem]">
           {pkg.includes.map((item) => (
             <li key={item} className="flex gap-2.5">
               <span className={featured ? "text-gold" : "text-rose"}>✿</span>
