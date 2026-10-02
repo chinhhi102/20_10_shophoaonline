@@ -29,10 +29,10 @@ export function EventCountdown({ targetIso }: { targetIso: string }) {
           key={label}
           className="rounded-3xl bg-white/70 px-2 py-4 text-center shadow-[0_16px_30px_-20px_rgba(91,36,64,0.5)] sm:px-5"
         >
-          <p className="text-[2.6rem] tabular-nums leading-none sm:text-5xl">
+          <p className="text-[2.4rem] font-semibold tabular-nums leading-none sm:text-5xl">
             {value === null ? "--" : String(value).padStart(2, "0")}
           </p>
-          <p className="mt-2 text-xs uppercase tracking-[0.2em] text-ink-soft">{label}</p>
+          <p className="mt-2 text-sm font-medium uppercase tracking-[0.16em] text-ink-soft">{label}</p>
         </div>
       ))}
     </div>

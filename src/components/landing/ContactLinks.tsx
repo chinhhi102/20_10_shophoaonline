@@ -30,7 +30,7 @@ const PHONE_ICON = (
 export function ContactLinks({ variant = "light", compact = false }: ContactLinksProps) {
   const dark = variant === "dark";
   const base =
-    "inline-flex min-h-14 items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-4 text-base font-medium transition-all duration-300 hover:-translate-y-0.5 sm:min-h-0 sm:px-6 sm:py-3.5 sm:text-sm";
+    "inline-flex min-h-[3.4rem] items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-4 text-[1.05rem] font-semibold transition-all duration-300 hover:-translate-y-0.5 sm:min-h-0 sm:px-6 sm:py-3.5 sm:text-sm";
   const primary =
     "bg-gradient-to-r from-rose to-rose-deep text-white shadow-[0_18px_36px_-14px_rgba(232,112,138,0.9)] hover:shadow-[0_22px_40px_-12px_rgba(232,112,138,1)]";
   const secondary = dark

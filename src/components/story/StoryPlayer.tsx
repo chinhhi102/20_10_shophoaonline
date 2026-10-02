@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-import { Petals } from "@/components/motion/Petals";
+import { Petals3D } from "@/components/three/Lazy3D";
 import { Envelope } from "@/components/story/Envelope";
 import { SceneFrame } from "@/components/story/SceneFrame";
 import {
@@ -92,7 +92,7 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
       />
-      <Petals count={12} tone="dark" />
+      <Petals3D tone="dark" count={60} />
       {story.musicUrl ? <MusicToggle src={asset(story.musicUrl)} /> : null}
       <SceneFrame sceneKey={current}>
         {current === "envelope" ? (

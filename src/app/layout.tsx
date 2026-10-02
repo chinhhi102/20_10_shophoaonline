@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, Cormorant_Garamond, Great_Vibes } from "next/font/google";
+import { Be_Vietnam_Pro, Great_Vibes, Playfair_Display } from "next/font/google";
 
 import { SITE } from "@/lib/site";
 
@@ -11,8 +11,8 @@ const greatVibes = Great_Vibes({
   weight: "400",
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="vi"
-      className={`${greatVibes.variable} ${cormorant.variable} ${beVietnam.variable} h-full`}
+      className={`${greatVibes.variable} ${playfair.variable} ${beVietnam.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

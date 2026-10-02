@@ -28,7 +28,7 @@
   --lace: #fbf5f1;
 
   --font-script: var(--font-great-vibes), cursive;
-  --font-display: var(--font-cormorant), "Times New Roman", serif;
+  --font-display: var(--font-playfair), "Times New Roman", serif;
   --font-body: var(--font-be-vietnam), system-ui, sans-serif;
 }
 
@@ -63,7 +63,7 @@ html {
 }
 @media (max-width: 639px) {
   html {
-    font-size: 17px;
+    font-size: 18px;
   }
 }
 

@@ -39,12 +39,12 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
         </span>
       </div>
       <div className="flex flex-1 flex-col px-8 pb-9 pt-2">
-        <h3 className={`font-script text-5xl ${featured ? "text-gold-soft" : "text-plum"}`}>{pkg.name}</h3>
-        <p className="mt-2 font-display text-2xl">
+        <h3 className={`whitespace-nowrap font-script text-[2.8rem] leading-none ${featured ? "text-gold-soft" : "text-plum"}`}>{pkg.name}</h3>
+        <p className="mt-3 font-display text-[1.6rem] font-semibold">
           {formatVnd(pkg.priceFrom)} <span className={`text-base ${muted}`}>– {formatVnd(pkg.priceTo)}</span>
         </p>
-        <p className={`mt-3 text-base leading-relaxed ${muted}`}>{pkg.promise}</p>
-        <ul className="mt-5 space-y-2.5 text-base">
+        <p className={`mt-3 text-[1.05rem] leading-relaxed ${muted}`}>{pkg.promise}</p>
+        <ul className="mt-5 space-y-2.5 text-[1.05rem]">
           {pkg.includes.map((item) => (
             <li key={item} className="flex gap-2.5">
               <span className={featured ? "text-gold" : "text-rose"}>✿</span>
@@ -55,7 +55,7 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
         <p className={`mt-5 text-sm ${muted}`}>Hợp với: {pkg.audience}</p>
         <a
           href="#dat-truoc"
-          className={`mt-6 inline-block rounded-full py-4 text-center text-base font-medium transition ${
+          className={`mt-6 inline-block rounded-full py-4 text-center text-[1.05rem] font-semibold transition ${
             featured
               ? "bg-rose text-white hover:bg-rose-deep"
               : "bg-blush text-plum hover:bg-blush-deep"

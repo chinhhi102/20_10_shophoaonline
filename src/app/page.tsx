@@ -8,6 +8,7 @@ import { Wave } from "@/components/landing/Wave";
 import { HeroIntro } from "@/components/motion/HeroIntro";
 import { Petals } from "@/components/motion/Petals";
 import { Reveal } from "@/components/motion/Reveal";
+import { EnvelopeScene, Petals3D } from "@/components/three/Lazy3D";
 import { PACKAGES, SITE, asset } from "@/lib/site";
 
 const DEMO_PATH = "/minh-and-tra/demo/";
@@ -67,7 +68,7 @@ const FAQ = [
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
     <p
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] ${
+      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.16em] ${
         light ? "bg-white/10 text-blush" : "bg-blush text-rose-deep"
       }`}
     >
@@ -81,7 +82,7 @@ function SectionTitle({ children, light = false }: { children: React.ReactNode; 
   return (
     <h2
       data-reveal="up"
-      className={`mt-4 font-display text-[2.4rem] font-medium leading-[1.1] sm:text-5xl ${light ? "text-cream" : "text-plum"}`}
+      className={`mt-4 font-display text-[2.35rem] font-semibold leading-[1.12] tracking-tight sm:text-5xl ${light ? "text-cream" : "text-plum"}`}
     >
       {children}
     </h2>
@@ -91,8 +92,8 @@ function SectionTitle({ children, light = false }: { children: React.ReactNode; 
 function Header() {
   return (
     <header className="sticky top-3 z-30 px-3 sm:top-4 sm:px-4">
-      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-cream/85 py-2 pl-5 pr-2 shadow-[0_18px_40px_-24px_rgba(91,36,64,0.45)] backdrop-blur">
-        <a href="#" className="whitespace-nowrap font-script text-[1.45rem] leading-none text-plum sm:text-3xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full bg-cream/85 py-2 pl-4 pr-2 shadow-[0_18px_40px_-24px_rgba(91,36,64,0.45)] backdrop-blur">
+        <a href="#" className="whitespace-nowrap font-script text-[1.25rem] leading-none text-plum sm:text-3xl">
           {SITE.name}
         </a>
         <nav className="hidden items-center gap-7 text-sm text-ink-soft md:flex">
@@ -103,7 +104,7 @@ function Header() {
         </nav>
         <a
           href="#goi-qua"
-          className="whitespace-nowrap rounded-full bg-gradient-to-r from-rose to-rose-deep px-5 py-2.5 text-sm font-medium text-white shadow-[0_12px_24px_-10px_rgba(232,112,138,0.9)] transition hover:-translate-y-0.5"
+          className="whitespace-nowrap rounded-full bg-gradient-to-r from-rose to-rose-deep px-4 py-2.5 text-[0.9rem] font-semibold text-white shadow-[0_12px_24px_-10px_rgba(232,112,138,0.9)] transition hover:-translate-y-0.5"
         >
           Xem gói
         </a>
@@ -121,8 +122,8 @@ function HeroStats() {
         ["Cọc", "50%"],
       ].map(([k, v]) => (
         <div key={k} className="rounded-2xl bg-white/60 px-3 py-3 lg:bg-transparent lg:p-0">
-          <dt className="text-xs text-ink-soft lg:text-sm">{k}</dt>
-          <dd className="mt-0.5 font-display text-xl text-plum lg:text-2xl">{v}</dd>
+          <dt className="text-sm text-ink-soft">{k}</dt>
+          <dd className="mt-0.5 font-display text-[1.3rem] font-semibold text-plum lg:text-2xl">{v}</dd>
         </div>
       ))}
     </dl>
@@ -140,7 +141,7 @@ function Hero() {
       </div>
       <div data-hero="glow" className="glow blob -left-40 top-10 hidden h-[520px] w-[520px] bg-blush lg:block" />
       <div data-hero="glow" className="glow blob blob-slow right-[-120px] top-[320px] hidden h-[460px] w-[460px] bg-peach lg:block" />
-      <Petals count={16} />
+      <Petals3D />
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-12 pt-[46svh] lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
         <div>
           <div data-hero="eyebrow">
@@ -148,15 +149,15 @@ function Hero() {
           </div>
           <h1
             data-hero="title"
-            className="mt-5 font-display text-[3.1rem] font-medium leading-[1.02] text-plum sm:text-6xl lg:text-7xl"
+            className="mt-5 font-display text-[2.9rem] font-semibold leading-[1.04] tracking-tight text-plum sm:text-6xl lg:text-7xl"
           >
             <span className="block">Một bó hoa,</span>
             <span className="block">một câu chuyện</span>
-            <span className="block font-script text-[3.9rem] font-normal text-rose sm:text-7xl lg:text-8xl">
+            <span className="block font-script text-[3.8rem] font-normal tracking-normal text-rose sm:text-7xl lg:text-8xl">
               em giữ được mãi.
             </span>
           </h1>
-          <p data-hero="copy" className="mt-5 max-w-lg text-[17px] leading-relaxed text-ink-soft sm:text-lg">
+          <p data-hero="copy" className="mt-5 max-w-lg text-[1.1rem] leading-relaxed text-ink sm:text-lg sm:text-ink-soft">
             Hoa tươi giao tận nơi ngày {SITE.deliveryWindow}, kèm thiệp in hình, ảnh đóng khung, và với gói Mãi Yêu là
             một trang web riêng kể chuyện của hai người.
           </p>
@@ -206,15 +207,15 @@ function Keeps() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset("/img/bouquet-lace.jpg")} alt="Bó hoa hồng và cẩm chướng đặt trên tấm ren" className="h-full w-full object-cover" />
           </div>
-          <p className="soft-card absolute -bottom-5 right-2 max-w-[250px] px-5 py-4 font-display text-lg italic leading-snug text-plum">
+          <p className="soft-card absolute -bottom-5 right-2 max-w-[260px] px-5 py-4 font-display text-[1.05rem] italic leading-snug text-plum">
             “Mỗi bó hoa là một câu chuyện. Hãy để người nhận giữ khoảnh khắc ấy mãi.”
           </p>
         </div>
         <div className="mt-6 space-y-4 lg:col-start-2 lg:mt-0">
           {KEEPS.map((k, i) => (
             <div key={k.fear} data-reveal="right" className={`soft-card px-6 py-5 ${i % 2 === 1 ? "sm:ml-5" : ""}`}>
-              <p className="font-display text-[1.35rem] italic leading-snug text-plum">“{k.fear}”</p>
-              <p className="mt-2 text-base leading-relaxed text-ink-soft">{k.answer}</p>
+              <p className="font-display text-[1.3rem] font-semibold leading-snug text-plum">“{k.fear}”</p>
+              <p className="mt-2 text-[1.05rem] leading-relaxed text-ink sm:text-base sm:text-ink-soft">{k.answer}</p>
             </div>
           ))}
         </div>
@@ -235,10 +236,10 @@ function Packages() {
               <Eyebrow>Ba gói cảm xúc</Eyebrow>
             </div>
             <SectionTitle>Chọn theo người bạn muốn tặng</SectionTitle>
-            <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-base text-ink-soft sm:text-lg">
+            <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-[1.05rem] text-ink sm:text-lg sm:text-ink-soft">
               Cả ba gói đều có hoa tươi và thiệp in hình. Khác nhau ở thứ cô ấy giữ lại được sau ngày 20/10.
             </p>
-            <p className="mt-3 text-sm text-rose-deep lg:hidden">Vuốt ngang để xem từng gói →</p>
+            <p className="mt-3 text-base font-medium text-rose-deep lg:hidden">Vuốt ngang để xem từng gói →</p>
           </div>
           <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 pt-6 [scrollbar-width:none] lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:px-5 lg:pb-0">
             {PACKAGES.map((pkg, i) => (
@@ -267,7 +268,7 @@ function MaiYeu() {
           aria-hidden="true"
           className="pointer-events-none absolute right-0 top-0 h-full w-full object-cover opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)] lg:w-[60%] lg:opacity-35 lg:[mask-image:linear-gradient(to_left,black,transparent)]"
         />
-        <Petals count={10} tone="dark" />
+        <Petals3D tone="dark" count={50} />
         <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-28">
           <div>
             <div data-reveal="up">
@@ -276,9 +277,12 @@ function MaiYeu() {
             <SectionTitle light>
               Một trang web <span className="font-script text-[3.4rem] font-normal text-gold-soft sm:text-6xl">chỉ cô ấy</span> mở được
             </SectionTitle>
-            <p data-reveal="up" className="mt-5 text-base text-blush/85 sm:text-lg">
+            <p data-reveal="up" className="mt-5 text-[1.05rem] text-blush/90 sm:text-lg">
               Link có mã riêng, không ai tìm thấy trên Google. Chỉ cô ấy, qua mã QR trên tấm thiệp.
             </p>
+            <div data-reveal="scale" className="mt-6 lg:hidden">
+              <EnvelopeScene initial="♥" className="h-[340px] w-full rounded-[2rem] bg-gradient-to-b from-white/5 to-white/0" />
+            </div>
             <a
               data-reveal="up"
               href={asset(DEMO_PATH)}
@@ -287,8 +291,8 @@ function MaiYeu() {
               className="mt-6 flex items-center justify-between rounded-3xl bg-gradient-to-r from-rose to-rose-deep px-6 py-5 text-white shadow-[0_24px_50px_-20px_rgba(232,112,138,1)] lg:hidden"
             >
               <span>
-                <span className="block font-display text-2xl">Mở thử trang demo</span>
-                <span className="block text-sm text-white/80">Chạm vào sáp để mở phong bì, như cô ấy sẽ thấy</span>
+                <span className="block font-display text-[1.4rem] font-semibold">Mở thử trang demo</span>
+                <span className="block text-base text-white/85">Chạm vào sáp để mở phong bì, như cô ấy sẽ thấy</span>
               </span>
               <span className="wax-seal !h-12 !w-12 shrink-0 !text-xl">♥</span>
             </a>
@@ -297,8 +301,8 @@ function MaiYeu() {
                 <li key={s.title} data-reveal="left" className="flex gap-4">
                   <span className="wax-seal !h-12 !w-12 shrink-0 !text-xl">{i + 1}</span>
                   <div>
-                    <h3 className="font-display text-2xl leading-tight">{s.title}</h3>
-                    <p className="mt-1 text-base leading-relaxed text-blush/75">{s.body}</p>
+                    <h3 className="font-display text-[1.35rem] font-semibold leading-tight">{s.title}</h3>
+                    <p className="mt-1 text-[1.02rem] leading-relaxed text-blush/80">{s.body}</p>
                   </div>
                 </li>
               ))}
@@ -308,8 +312,8 @@ function MaiYeu() {
                 <li key={title} data-reveal="up" className="flex gap-4 rounded-3xl border border-blush/15 bg-white/5 px-5 py-4">
                   <span className="text-2xl" aria-hidden="true">{icon}</span>
                   <span>
-                    <span className="block font-display text-xl">{title}</span>
-                    <span className="block text-sm text-blush/70">{body}</span>
+                    <span className="block font-display text-[1.2rem] font-semibold">{title}</span>
+                    <span className="block text-base text-blush/75">{body}</span>
                   </span>
                 </li>
               ))}
@@ -318,8 +322,13 @@ function MaiYeu() {
               <ContactLinks variant="dark" compact />
             </div>
           </div>
-          <div data-reveal="scale" className="hidden lg:block">
-            <PhoneDemo src={asset(DEMO_PATH)} />
+          <div className="hidden lg:block">
+            <div data-reveal="scale">
+              <EnvelopeScene initial="♥" className="h-[380px] w-full" />
+            </div>
+            <div data-reveal="scale" className="mt-4">
+              <PhoneDemo src={asset(DEMO_PATH)} />
+            </div>
           </div>
         </div>
       </div>
@@ -339,7 +348,7 @@ function Timeline() {
           <div className="mt-5">
             <EventCountdown targetIso={SITE.eventDate} />
           </div>
-          <p className="mt-5 text-base text-ink-soft">
+          <p className="mt-5 text-[1.02rem] text-ink sm:text-base sm:text-ink-soft">
             Pre-order đóng ngày {SITE.preorderCloses}. Hoa tươi nhập theo số đơn đã chốt, nên sau ngày đó tụi mình không nhận thêm.
           </p>
         </div>
@@ -348,9 +357,9 @@ function Timeline() {
             <li key={t.date} data-reveal="right" className={`soft-card flex gap-4 px-5 py-5 ${TIMELINE_OFFSET[i]}`}>
               <span className="mt-2 h-3 w-3 shrink-0 rounded-full bg-rose shadow-[0_0_0_6px_var(--blush)]" />
               <div>
-                <p className="text-xs font-medium uppercase tracking-[0.2em] text-rose-deep">{t.date}</p>
-                <h3 className="mt-1 font-display text-2xl text-plum">{t.title}</h3>
-                <p className="mt-1 text-base text-ink-soft">{t.body}</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-rose-deep">{t.date}</p>
+                <h3 className="mt-1 font-display text-[1.35rem] font-semibold text-plum">{t.title}</h3>
+                <p className="mt-1 text-[1.02rem] text-ink sm:text-base sm:text-ink-soft">{t.body}</p>
               </div>
             </li>
           ))}
@@ -372,10 +381,10 @@ function Order() {
           <Petals count={8} />
           <div className="relative px-6 py-14 text-center sm:px-12 sm:py-20">
             <p className="font-script text-[4.2rem] leading-none text-rose sm:text-7xl">Đặt trước</p>
-            <h2 className="mt-3 font-display text-[1.9rem] font-medium leading-tight text-plum sm:text-4xl">
+            <h2 className="mt-3 font-display text-[1.9rem] font-semibold leading-tight text-plum sm:text-4xl">
               Một tin nhắn là xong. Tụi mình lo phần còn lại.
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-base text-ink-soft sm:text-lg">
+            <p className="mx-auto mt-4 max-w-lg text-[1.05rem] text-ink sm:text-lg sm:text-ink-soft">
               Nhắn Zalo hoặc gọi, báo gói bạn chọn và ngày muốn nhận. Tụi mình xác nhận hoa, nhận cọc 50% và giữ slot giao cho bạn.
             </p>
             <div className="mt-7 flex justify-center">
@@ -400,11 +409,11 @@ function Faq() {
         <div className="mt-8 space-y-3">
           {FAQ.map((f) => (
             <details key={f.q} data-reveal="up" className="group soft-card px-5 py-4 sm:px-6">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[1.3rem] leading-snug text-plum">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[1.25rem] font-semibold leading-snug text-plum">
                 {f.q}
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-blush text-xl text-rose transition group-open:rotate-45">+</span>
               </summary>
-              <p className="mt-3 text-base leading-relaxed text-ink-soft">{f.a}</p>
+              <p className="mt-3 text-[1.02rem] leading-relaxed text-ink sm:text-base sm:text-ink-soft">{f.a}</p>
             </details>
           ))}
         </div>

@@ -71,3 +71,9 @@ Cảnh nào không có nội dung sẽ tự được bỏ qua.
 Workflow `.github/workflows/deploy.yml` tự build và deploy mỗi khi push lên `main`.
 Site nằm tại `https://<user>.github.io/<tên-repo>/`, nên build dùng `NEXT_PUBLIC_BASE_PATH=/<tên-repo>`.
 Mọi đường dẫn tới file trong `public/` phải đi qua hàm `asset()` trong `src/lib/site.ts`.
+
+## Hiệu ứng 3D (three.js)
+
+- `src/components/three/PetalField.tsx`: cánh hoa 3D (instanced mesh) rơi và nghiêng theo chạm/chuột, dùng ở hero, section Mãi Yêu và trang kể chuyện.
+- `src/components/three/Envelope3D.tsx`: phong bì sáp niêm 3D, chạm để mở, trái tim bay lên kèm lấp lánh.
+- `src/components/three/Lazy3D.tsx`: chỉ tải three.js khi khối vào tầm nhìn, tự chuyển về cánh hoa 2D nếu máy không có WebGL hoặc bật "giảm chuyển động".

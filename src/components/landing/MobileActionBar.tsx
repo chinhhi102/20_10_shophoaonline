@@ -9,14 +9,14 @@ export function MobileActionBar() {
           href={SITE.zaloUrl}
           target="_blank"
           rel="noopener"
-          className="flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose to-rose-deep text-base font-medium text-white"
+          className="flex h-[3.4rem] flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose to-rose-deep text-[1.05rem] font-semibold text-white"
         >
           <span aria-hidden="true">💬</span>
           Nhắn Zalo đặt hoa
         </a>
         <a
           href={`tel:${SITE.phone}`}
-          className="flex h-14 items-center justify-center gap-2 rounded-full bg-white px-5 text-base font-medium text-plum"
+          className="flex h-[3.4rem] items-center justify-center gap-2 rounded-full bg-white px-5 text-[1.05rem] font-semibold text-plum"
         >
           <span aria-hidden="true">📞</span>
           Gọi
