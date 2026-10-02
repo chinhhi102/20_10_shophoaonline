@@ -83,6 +83,14 @@ export const PACKAGES: Package[] = [
   },
 ];
 
+/** Tiền tố đường dẫn khi site nằm dưới thư mục con (GitHub Pages). */
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/** Dùng cho mọi src/href viết tay tới file trong public/. */
+export function asset(path: string): string {
+  return `${BASE_PATH}${path}`;
+}
+
 export function formatVnd(amount: number): string {
   return `${amount.toLocaleString("vi-VN")}đ`;
 }

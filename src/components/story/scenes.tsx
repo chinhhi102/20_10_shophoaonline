@@ -7,6 +7,7 @@ import { Bouquet } from "@/components/story/Bouquet";
 import { LaceHeart } from "@/components/story/LaceHeart";
 import { Polaroid } from "@/components/story/Polaroid";
 import { useElapsed, type Elapsed } from "@/components/story/useElapsed";
+import { asset } from "@/lib/site";
 import type { Story } from "@/lib/story-types";
 
 interface SceneProps {
@@ -236,7 +237,7 @@ export function LetterScene({ story }: { story: Story }) {
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 key={url}
-                src={url}
+                src={asset(url)}
                 alt=""
                 className="h-14 w-14 rounded-full border-2 border-pearl object-cover shadow"
               />
@@ -247,7 +248,7 @@ export function LetterScene({ story }: { story: Story }) {
       {story.voiceUrl ? (
         <div className="mt-6">
           <p className="mb-2 text-xs uppercase tracking-[0.2em] text-ink-soft">Nghe anh nói</p>
-          <audio controls src={story.voiceUrl} className="w-full" />
+          <audio controls src={asset(story.voiceUrl)} className="w-full" />
         </div>
       ) : null}
       <p className="mt-8 text-right font-script text-4xl text-rose-deep">{story.hisName}</p>

@@ -7,7 +7,7 @@ import { Wave } from "@/components/landing/Wave";
 import { HeroIntro } from "@/components/motion/HeroIntro";
 import { Petals } from "@/components/motion/Petals";
 import { Reveal } from "@/components/motion/Reveal";
-import { PACKAGES, SITE } from "@/lib/site";
+import { PACKAGES, SITE, asset } from "@/lib/site";
 
 const DEMO_PATH = "/minh-and-tra/demo/";
 
@@ -135,7 +135,7 @@ function Hero() {
         <div className="relative mx-auto w-full max-w-[440px]">
           <div data-hero="photo" className="soft-photo aspect-[4/5] shadow-[0_60px_100px_-40px_rgba(91,36,64,0.6)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/hero-bouquet.jpg" alt="Bó hoa hồng bọc giấy hồng được trao tận tay" className="h-full w-full object-cover" />
+            <img src={asset("/img/hero-bouquet.jpg")} alt="Bó hoa hồng bọc giấy hồng được trao tận tay" className="h-full w-full object-cover" />
           </div>
           <a
             href="#mai-yeu"
@@ -170,7 +170,7 @@ function Keeps() {
         <div data-reveal="left" className="relative mx-auto w-full max-w-[460px]">
           <div className="soft-photo aspect-square shadow-[0_50px_90px_-40px_rgba(91,36,64,0.55)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/bouquet-lace.jpg" alt="Bó hoa hồng và cẩm chướng đặt trên tấm ren" className="h-full w-full object-cover" />
+            <img src={asset("/img/bouquet-lace.jpg")} alt="Bó hoa hồng và cẩm chướng đặt trên tấm ren" className="h-full w-full object-cover" />
           </div>
           <p className="soft-card absolute -bottom-6 right-0 max-w-[240px] px-5 py-4 font-display text-lg italic text-plum">
             “Mỗi bó hoa là một câu chuyện. Hãy để người nhận giữ khoảnh khắc ấy mãi.”
@@ -222,7 +222,7 @@ function Packages() {
           </div>
           <div className="mt-16 grid gap-8 lg:grid-cols-3">
             {PACKAGES.map((pkg, i) => (
-              <PackageCard key={pkg.id} pkg={pkg} photo={PACKAGE_PHOTOS[pkg.id]} index={i} />
+              <PackageCard key={pkg.id} pkg={pkg} photo={asset(PACKAGE_PHOTOS[pkg.id])} index={i} />
             ))}
           </div>
         </div>
@@ -240,7 +240,7 @@ function MaiYeu() {
       <div className="relative overflow-hidden bg-plum text-cream">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/img/lily-dark.jpg"
+          src={asset("/img/lily-dark.jpg")}
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute right-0 top-0 h-full w-[60%] object-cover opacity-35 [mask-image:linear-gradient(to_left,black,transparent)]"
@@ -275,7 +275,7 @@ function MaiYeu() {
             </div>
           </div>
           <div data-reveal="scale">
-            <PhoneDemo src={DEMO_PATH} />
+            <PhoneDemo src={asset(DEMO_PATH)} />
           </div>
         </div>
       </div>
@@ -323,7 +323,7 @@ function Order() {
       <div className="mx-auto max-w-6xl px-5 py-16">
         <div data-reveal="scale" className="relative overflow-hidden rounded-[3rem] shadow-[0_60px_100px_-50px_rgba(91,36,64,0.6)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/img/rose-macro.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={asset("/img/rose-macro.jpg")} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-br from-cream/95 via-blush/85 to-peach/80" />
           <Petals count={8} />
           <div className="relative px-7 py-16 text-center sm:px-12 sm:py-20">

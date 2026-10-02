@@ -14,6 +14,7 @@ import {
   MemoriesScene,
   TeaserScene,
 } from "@/components/story/scenes";
+import { asset } from "@/lib/site";
 import type { Story } from "@/lib/story-types";
 
 interface StoryPlayerProps {
@@ -86,13 +87,13 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/img/lily-dark.jpg"
+        src={asset("/img/lily-dark.jpg")}
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
       />
       <Petals count={12} tone="dark" />
-      {story.musicUrl ? <MusicToggle src={story.musicUrl} /> : null}
+      {story.musicUrl ? <MusicToggle src={asset(story.musicUrl)} /> : null}
       <SceneFrame sceneKey={current}>
         {current === "envelope" ? (
           <Envelope title={story.title} herName={story.herName} initial={initial} onOpened={goNext} />
