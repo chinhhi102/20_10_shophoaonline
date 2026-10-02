@@ -111,8 +111,8 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
         ) : null}
       </SceneFrame>
       {index > 1 ? (
-        <nav className="relative z-10 mt-8 flex items-center justify-center gap-4 text-xs text-petal-soft/70">
-          <button type="button" onClick={goBack} className="underline underline-offset-4">
+        <nav className="relative z-10 mt-8 flex items-center justify-center gap-4 text-sm text-petal-soft/80">
+          <button type="button" onClick={goBack} className="min-h-11 px-3 underline underline-offset-4">
             Quay lại
           </button>
           <span aria-hidden="true">·</span>

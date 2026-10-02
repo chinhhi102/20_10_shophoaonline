@@ -20,7 +20,7 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
       }`}
       style={{ transitionDelay: `${index * 40}ms` }}
     >
-      <div className="relative h-60 overflow-hidden" style={{ borderRadius: "0 0 55% 45% / 0 0 22% 22%" }}>
+      <div className="relative h-56 overflow-hidden sm:h-60" style={{ borderRadius: "0 0 55% 45% / 0 0 22% 22%" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={photo}
@@ -43,8 +43,8 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
         <p className="mt-2 font-display text-2xl">
           {formatVnd(pkg.priceFrom)} <span className={`text-base ${muted}`}>– {formatVnd(pkg.priceTo)}</span>
         </p>
-        <p className={`mt-3 text-sm leading-relaxed ${muted}`}>{pkg.promise}</p>
-        <ul className="mt-5 space-y-2 text-sm">
+        <p className={`mt-3 text-base leading-relaxed ${muted}`}>{pkg.promise}</p>
+        <ul className="mt-5 space-y-2.5 text-base">
           {pkg.includes.map((item) => (
             <li key={item} className="flex gap-2.5">
               <span className={featured ? "text-gold" : "text-rose"}>✿</span>
@@ -52,10 +52,10 @@ export function PackageCard({ pkg, photo, index }: PackageCardProps) {
             </li>
           ))}
         </ul>
-        <p className={`mt-5 text-xs ${muted}`}>Hợp với: {pkg.audience}</p>
+        <p className={`mt-5 text-sm ${muted}`}>Hợp với: {pkg.audience}</p>
         <a
           href="#dat-truoc"
-          className={`mt-6 inline-block rounded-full py-3.5 text-center text-sm font-medium transition ${
+          className={`mt-6 inline-block rounded-full py-4 text-center text-base font-medium transition ${
             featured
               ? "bg-rose text-white hover:bg-rose-deep"
               : "bg-blush text-plum hover:bg-blush-deep"

@@ -21,7 +21,7 @@ export function Bouquet({ photos }: BouquetProps) {
   const stems = photos.slice(0, 5);
   const offset = Math.floor((5 - stems.length) / 2);
   return (
-    <div className="relative mx-auto h-[440px] w-[340px] sm:h-[480px] sm:w-[380px]">
+    <div className="relative mx-auto h-[440px] w-[min(340px,calc(100vw-40px))] sm:h-[480px] sm:w-[380px]">
       <svg viewBox="0 0 400 400" className="anim-spin-slow absolute inset-0 h-full w-full">
         <defs>
           <path id="ring" d="M200,200 m-178,0 a178,178 0 1,1 356,0 a178,178 0 1,1 -356,0" />

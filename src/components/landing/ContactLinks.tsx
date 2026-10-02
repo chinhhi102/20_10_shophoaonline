@@ -23,25 +23,29 @@ const PHONE_ICON = (
   </svg>
 );
 
-/** Ba cách đặt hàng: Zalo, gọi, Facebook. Dùng chung cho hero, phần đặt hàng và footer. */
+/**
+ * Ba cách đặt hàng: Zalo, gọi, Facebook.
+ * Trên điện thoại: nút Zalo chiếm trọn hàng, hai nút còn lại chia đôi hàng dưới, cao 56px cho dễ bấm.
+ */
 export function ContactLinks({ variant = "light", compact = false }: ContactLinksProps) {
   const dark = variant === "dark";
   const base =
-    "inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5";
+    "inline-flex min-h-14 items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-4 text-base font-medium transition-all duration-300 hover:-translate-y-0.5 sm:min-h-0 sm:px-6 sm:py-3.5 sm:text-sm";
   const primary =
     "bg-gradient-to-r from-rose to-rose-deep text-white shadow-[0_18px_36px_-14px_rgba(232,112,138,0.9)] hover:shadow-[0_22px_40px_-12px_rgba(232,112,138,1)]";
   const secondary = dark
     ? "border border-blush/30 text-blush hover:border-blush/70 hover:bg-white/5"
     : "bg-white/80 text-plum shadow-[0_12px_30px_-18px_rgba(91,36,64,0.5)] hover:bg-white";
   return (
-    <div className={`flex flex-wrap gap-3 ${compact ? "" : "sm:gap-4"}`}>
-      <a href={SITE.zaloUrl} target="_blank" rel="noopener" className={`${base} ${primary}`}>
+    <div className={`grid w-full grid-cols-2 gap-3 sm:flex sm:w-auto sm:flex-wrap ${compact ? "" : "sm:gap-4"}`}>
+      <a href={SITE.zaloUrl} target="_blank" rel="noopener" className={`${base} ${primary} col-span-2 sm:col-span-1`}>
         {ZALO_ICON}
-        Nhắn Zalo {compact ? "" : SITE.phoneDisplay}
+        Nhắn Zalo
+        {compact ? null : <span className="hidden sm:inline">{SITE.phoneDisplay}</span>}
       </a>
       <a href={`tel:${SITE.phone}`} className={`${base} ${secondary}`}>
         {PHONE_ICON}
-        Gọi {SITE.phoneDisplay}
+        Gọi ngay
       </a>
       <a href={SITE.facebookUrl} target="_blank" rel="noopener" className={`${base} ${secondary}`}>
         {FB_ICON}

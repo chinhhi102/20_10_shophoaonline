@@ -1,6 +1,7 @@
 import { ContactLinks } from "@/components/landing/ContactLinks";
 import { EventCountdown } from "@/components/landing/EventCountdown";
 import { Marquee } from "@/components/landing/Marquee";
+import { MobileActionBar } from "@/components/landing/MobileActionBar";
 import { PackageCard } from "@/components/landing/PackageCard";
 import { PhoneDemo } from "@/components/landing/PhoneDemo";
 import { Wave } from "@/components/landing/Wave";
@@ -35,8 +36,17 @@ const KEEPS = [
 
 const STEPS = [
   { title: "Nhắn Zalo cho tụi mình", body: "Chọn gói, báo tên hai bạn, ngày kỷ niệm và gửi 5 tấm ảnh cùng vài dòng bạn muốn nói." },
-  { title: "Tụi mình dựng trang riêng", body: "Trong 24 giờ bạn nhận link xem trước dạng /tên-anh-and-tên-em/mã-riêng. Sửa đến khi ưng mới chốt." },
+  { title: "Tụi mình dựng trang riêng", body: "Trong 24 giờ bạn nhận link xem trước. Sửa đến khi ưng mới chốt." },
   { title: "Cô ấy quét QR trên thiệp", body: "Thiệp in mã QR đi cùng bó hoa. Quét là phong bì mở ra, câu chuyện bắt đầu." },
+];
+
+const FEATURES = [
+  ["💌", "Phong bì sáp niêm", "Chạm vào sáp mang chữ cái tên cô ấy để mở."],
+  ["⏳", "Đếm ngày bên nhau", "Chạy từng giây kể từ ngày kỷ niệm của hai bạn."],
+  ["💗", "5 điều anh thích ở em", "Ba trái tim ren: 5 điều, cảm ơn, lời chúc."],
+  ["💐", "Bó hoa bằng ảnh", "Ảnh hai bạn gói thành bó hoa, vòng chữ “I love you” xoay quanh."],
+  ["📷", "Album kỷ niệm", "Ảnh polaroid với chú thích do bạn viết."],
+  ["🎙️", "Thư và giọng nói", "Lá thư ký tên bạn, kèm đoạn ghi âm nếu muốn."],
 ];
 
 const TIMELINE = [
@@ -57,7 +67,7 @@ const FAQ = [
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
     <p
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] ${
+      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] ${
         light ? "bg-white/10 text-blush" : "bg-blush text-rose-deep"
       }`}
     >
@@ -67,11 +77,22 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
   );
 }
 
+function SectionTitle({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+  return (
+    <h2
+      data-reveal="up"
+      className={`mt-4 font-display text-[2.4rem] font-medium leading-[1.1] sm:text-5xl ${light ? "text-cream" : "text-plum"}`}
+    >
+      {children}
+    </h2>
+  );
+}
+
 function Header() {
   return (
-    <header className="sticky top-4 z-30 px-4">
-      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-cream/80 px-5 py-2.5 shadow-[0_18px_40px_-24px_rgba(91,36,64,0.45)] backdrop-blur">
-        <a href="#" className="font-script text-2xl text-plum sm:text-3xl">
+    <header className="sticky top-3 z-30 px-3 sm:top-4 sm:px-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-cream/85 py-2 pl-5 pr-2 shadow-[0_18px_40px_-24px_rgba(91,36,64,0.45)] backdrop-blur">
+        <a href="#" className="whitespace-nowrap font-script text-[1.45rem] leading-none text-plum sm:text-3xl">
           {SITE.name}
         </a>
         <nav className="hidden items-center gap-7 text-sm text-ink-soft md:flex">
@@ -81,79 +102,84 @@ function Header() {
           <a href="#hoi-dap" className="transition hover:text-plum">Hỏi đáp</a>
         </nav>
         <a
-          href={SITE.zaloUrl}
-          target="_blank"
-          rel="noopener"
-          className="rounded-full bg-gradient-to-r from-rose to-rose-deep px-5 py-2 text-sm font-medium text-white shadow-[0_12px_24px_-10px_rgba(232,112,138,0.9)] transition hover:-translate-y-0.5"
+          href="#goi-qua"
+          className="whitespace-nowrap rounded-full bg-gradient-to-r from-rose to-rose-deep px-5 py-2.5 text-sm font-medium text-white shadow-[0_12px_24px_-10px_rgba(232,112,138,0.9)] transition hover:-translate-y-0.5"
         >
-          Đặt trước
+          Xem gói
         </a>
       </div>
     </header>
   );
 }
 
+function HeroStats() {
+  return (
+    <dl className="mt-8 grid grid-cols-3 gap-3 text-sm lg:mt-10 lg:flex lg:gap-x-10">
+      {[
+        ["Giao hoa", SITE.deliveryWindow],
+        ["Giá từ", "299.000đ"],
+        ["Cọc", "50%"],
+      ].map(([k, v]) => (
+        <div key={k} className="rounded-2xl bg-white/60 px-3 py-3 lg:bg-transparent lg:p-0">
+          <dt className="text-xs text-ink-soft lg:text-sm">{k}</dt>
+          <dd className="mt-0.5 font-display text-xl text-plum lg:text-2xl">{v}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 function Hero() {
   return (
     <HeroIntro className="relative -mt-16 overflow-hidden pt-16">
-      <div data-hero="glow" className="glow blob -left-40 top-10 h-[520px] w-[520px] bg-blush" />
-      <div data-hero="glow" className="glow blob blob-slow right-[-120px] top-[320px] h-[460px] w-[460px] bg-peach" />
+      {/* Mobile: ảnh tràn màn hình, chữ đè lên phần dưới ảnh */}
+      <div className="absolute inset-x-0 top-0 h-[64svh] lg:hidden" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img data-hero="photo" src={asset("/img/hero-bouquet.jpg")} alt="" className="h-full w-full object-cover object-[50%_30%]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/10 via-cream/30 to-cream" />
+      </div>
+      <div data-hero="glow" className="glow blob -left-40 top-10 hidden h-[520px] w-[520px] bg-blush lg:block" />
+      <div data-hero="glow" className="glow blob blob-slow right-[-120px] top-[320px] hidden h-[460px] w-[460px] bg-peach lg:block" />
       <Petals count={16} />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-12 pt-[46svh] lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
         <div>
           <div data-hero="eyebrow">
             <Eyebrow>20/10 · Pre-order mở từ {SITE.preorderOpens}</Eyebrow>
           </div>
           <h1
             data-hero="title"
-            className="mt-6 font-display text-[2.9rem] font-medium leading-[1.04] text-plum sm:text-6xl lg:text-7xl"
+            className="mt-5 font-display text-[3.1rem] font-medium leading-[1.02] text-plum sm:text-6xl lg:text-7xl"
           >
             <span className="block">Một bó hoa,</span>
             <span className="block">một câu chuyện</span>
-            <span className="block font-script text-6xl font-normal text-rose sm:text-7xl lg:text-8xl">
+            <span className="block font-script text-[3.9rem] font-normal text-rose sm:text-7xl lg:text-8xl">
               em giữ được mãi.
             </span>
           </h1>
-          <p data-hero="copy" className="mt-6 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg">
-            Hoa tươi giao tận nơi ngày {SITE.deliveryWindow}, đi cùng thiệp in hình, ảnh đóng khung, và với gói
-            Mãi Yêu là một trang web riêng kể chuyện của hai người. Cô ấy quét mã QR trên thiệp, phong bì mở ra.
+          <p data-hero="copy" className="mt-5 max-w-lg text-[17px] leading-relaxed text-ink-soft sm:text-lg">
+            Hoa tươi giao tận nơi ngày {SITE.deliveryWindow}, kèm thiệp in hình, ảnh đóng khung, và với gói Mãi Yêu là
+            một trang web riêng kể chuyện của hai người.
           </p>
-          <div data-hero="cta" className="mt-8">
+          <div data-hero="cta" className="mt-7">
             <ContactLinks />
           </div>
-          <dl data-hero="copy" className="mt-10 flex max-w-md flex-wrap gap-x-10 gap-y-4 text-sm">
-            {[
-              ["Giao hoa", SITE.deliveryWindow],
-              ["Giá từ", "299.000đ"],
-              ["Cọc giữ chỗ", "50%"],
-            ].map(([k, v]) => (
-              <div key={k}>
-                <dt className="text-ink-soft">{k}</dt>
-                <dd className="mt-0.5 font-display text-2xl text-plum">{v}</dd>
-              </div>
-            ))}
-          </dl>
+          <div data-hero="copy">
+            <HeroStats />
+          </div>
         </div>
-        <div className="relative mx-auto w-full max-w-[440px]">
+        <div className="relative mx-auto hidden w-full max-w-[440px] lg:block">
           <div data-hero="photo" className="soft-photo aspect-[4/5] shadow-[0_60px_100px_-40px_rgba(91,36,64,0.6)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset("/img/hero-bouquet.jpg")} alt="Bó hoa hồng bọc giấy hồng được trao tận tay" className="h-full w-full object-cover" />
           </div>
-          <a
-            href="#mai-yeu"
-            data-hero="float"
-            className="soft-card absolute -bottom-6 left-0 flex items-center gap-4 px-5 py-4 sm:-left-10"
-          >
+          <a href="#mai-yeu" data-hero="float" className="soft-card absolute -bottom-6 -left-10 flex items-center gap-4 px-5 py-4">
             <span className="wax-seal !h-14 !w-14 !text-2xl">♥</span>
             <span>
               <span className="block font-display text-lg text-plum">Quét QR trên thiệp</span>
               <span className="block text-xs text-ink-soft">một trang web chỉ cô ấy mở được</span>
             </span>
           </a>
-          <div
-            data-hero="float"
-            className="soft-card absolute -right-2 top-8 rotate-6 px-4 py-3 text-center sm:-right-8"
-          >
+          <div data-hero="float" className="soft-card absolute -right-8 top-8 rotate-6 px-4 py-3 text-center">
             <span className="block font-script text-3xl text-rose">20/10</span>
             <span className="block text-[11px] uppercase tracking-[0.2em] text-ink-soft">giao đúng ngày</span>
           </div>
@@ -168,35 +194,29 @@ function Keeps() {
   return (
     <Reveal as="section" className="relative overflow-x-clip">
       <div className="glow blob -right-32 top-20 h-[420px] w-[420px] bg-blush" />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-24 lg:grid-cols-[0.9fr_1.1fr]">
-        <div data-reveal="left" className="relative mx-auto w-full max-w-[460px]">
-          <div className="soft-photo aspect-square shadow-[0_50px_90px_-40px_rgba(91,36,64,0.55)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={asset("/img/bouquet-lace.jpg")} alt="Bó hoa hồng và cẩm chướng đặt trên tấm ren" className="h-full w-full object-cover" />
-          </div>
-          <p className="soft-card absolute -bottom-6 right-0 max-w-[240px] px-5 py-4 font-display text-lg italic text-plum">
-            “Mỗi bó hoa là một câu chuyện. Hãy để người nhận giữ khoảnh khắc ấy mãi.”
-          </p>
-        </div>
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
         <div>
           <div data-reveal="up">
             <Eyebrow>Những gì cô ấy giữ lại</Eyebrow>
           </div>
-          <h2 data-reveal="up" className="mt-4 max-w-xl font-display text-4xl font-medium text-plum sm:text-5xl">
-            Tặng hoa thì dễ. Tặng một thứ cô ấy nhớ mãi mới khó.
-          </h2>
-          <div className="mt-8 space-y-4">
-            {KEEPS.map((k, i) => (
-              <div
-                key={k.fear}
-                data-reveal="right"
-                className={`soft-card px-6 py-5 ${i % 2 === 1 ? "sm:ml-5" : ""}`}
-              >
-                <p className="font-display text-xl italic text-plum">“{k.fear}”</p>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{k.answer}</p>
-              </div>
-            ))}
+          <SectionTitle>Tặng hoa thì dễ. Tặng một thứ cô ấy nhớ mãi mới khó.</SectionTitle>
+        </div>
+        <div data-reveal="left" className="relative mx-auto w-full max-w-[460px] lg:order-first">
+          <div className="soft-photo aspect-square shadow-[0_50px_90px_-40px_rgba(91,36,64,0.55)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={asset("/img/bouquet-lace.jpg")} alt="Bó hoa hồng và cẩm chướng đặt trên tấm ren" className="h-full w-full object-cover" />
           </div>
+          <p className="soft-card absolute -bottom-5 right-2 max-w-[250px] px-5 py-4 font-display text-lg italic leading-snug text-plum">
+            “Mỗi bó hoa là một câu chuyện. Hãy để người nhận giữ khoảnh khắc ấy mãi.”
+          </p>
+        </div>
+        <div className="mt-6 space-y-4 lg:col-start-2 lg:mt-0">
+          {KEEPS.map((k, i) => (
+            <div key={k.fear} data-reveal="right" className={`soft-card px-6 py-5 ${i % 2 === 1 ? "sm:ml-5" : ""}`}>
+              <p className="font-display text-[1.35rem] italic leading-snug text-plum">“{k.fear}”</p>
+              <p className="mt-2 text-base leading-relaxed text-ink-soft">{k.answer}</p>
+            </div>
+          ))}
         </div>
       </div>
     </Reveal>
@@ -209,21 +229,22 @@ function Packages() {
       <div id="goi-qua" className="absolute -top-24" />
       <Wave fill="var(--blush)" />
       <div className="bg-blush">
-        <div className="mx-auto max-w-6xl px-5 pb-28 pt-10">
-          <div className="text-center">
+        <div className="mx-auto max-w-6xl pb-20 pt-6 lg:pb-28 lg:pt-10">
+          <div className="px-5 text-center">
             <div data-reveal="up">
               <Eyebrow>Ba gói cảm xúc</Eyebrow>
             </div>
-            <h2 data-reveal="up" className="mt-4 font-display text-4xl font-medium text-plum sm:text-5xl">
-              Chọn theo người bạn muốn tặng
-            </h2>
-            <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-ink-soft">
+            <SectionTitle>Chọn theo người bạn muốn tặng</SectionTitle>
+            <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-base text-ink-soft sm:text-lg">
               Cả ba gói đều có hoa tươi và thiệp in hình. Khác nhau ở thứ cô ấy giữ lại được sau ngày 20/10.
             </p>
+            <p className="mt-3 text-sm text-rose-deep lg:hidden">Vuốt ngang để xem từng gói →</p>
           </div>
-          <div className="mt-16 grid gap-8 lg:grid-cols-3">
+          <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 pt-6 [scrollbar-width:none] lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:px-5 lg:pb-0">
             {PACKAGES.map((pkg, i) => (
-              <PackageCard key={pkg.id} pkg={pkg} photo={asset(PACKAGE_PHOTOS[pkg.id])} index={i} />
+              <div key={pkg.id} className="w-[86%] shrink-0 snap-center sm:w-[70%] lg:w-auto">
+                <PackageCard pkg={pkg} photo={asset(PACKAGE_PHOTOS[pkg.id])} index={i} />
+              </div>
             ))}
           </div>
         </div>
@@ -244,38 +265,60 @@ function MaiYeu() {
           src={asset("/img/lily-dark.jpg")}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute right-0 top-0 h-full w-[60%] object-cover opacity-35 [mask-image:linear-gradient(to_left,black,transparent)]"
+          className="pointer-events-none absolute right-0 top-0 h-full w-full object-cover opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)] lg:w-[60%] lg:opacity-35 lg:[mask-image:linear-gradient(to_left,black,transparent)]"
         />
         <Petals count={10} tone="dark" />
-        <div className="relative mx-auto grid max-w-6xl gap-14 px-5 py-20 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-28">
+        <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-28">
           <div>
             <div data-reveal="up">
               <Eyebrow light>Gói Mãi Yêu hoạt động thế nào</Eyebrow>
             </div>
-            <h2 data-reveal="up" className="mt-4 font-display text-4xl font-medium sm:text-5xl">
-              Một trang web <span className="font-script text-6xl font-normal text-gold-soft">chỉ cô ấy</span> mở được
-            </h2>
-            <p data-reveal="up" className="mt-5 text-blush/80">
-              Đường link có dạng{" "}
-              <code className="rounded-full bg-white/10 px-2 py-0.5 font-body text-sm">hoavakhoanhkhac.vn/minh-and-tra/mã-riêng</code>.
-              Không ai tìm thấy nếu không có mã. Chỉ cô ấy, qua mã QR trên tấm thiệp.
+            <SectionTitle light>
+              Một trang web <span className="font-script text-[3.4rem] font-normal text-gold-soft sm:text-6xl">chỉ cô ấy</span> mở được
+            </SectionTitle>
+            <p data-reveal="up" className="mt-5 text-base text-blush/85 sm:text-lg">
+              Link có mã riêng, không ai tìm thấy trên Google. Chỉ cô ấy, qua mã QR trên tấm thiệp.
             </p>
+            <a
+              data-reveal="up"
+              href={asset(DEMO_PATH)}
+              target="_blank"
+              rel="noopener"
+              className="mt-6 flex items-center justify-between rounded-3xl bg-gradient-to-r from-rose to-rose-deep px-6 py-5 text-white shadow-[0_24px_50px_-20px_rgba(232,112,138,1)] lg:hidden"
+            >
+              <span>
+                <span className="block font-display text-2xl">Mở thử trang demo</span>
+                <span className="block text-sm text-white/80">Chạm vào sáp để mở phong bì, như cô ấy sẽ thấy</span>
+              </span>
+              <span className="wax-seal !h-12 !w-12 shrink-0 !text-xl">♥</span>
+            </a>
             <ol className="mt-10 space-y-6">
               {STEPS.map((s, i) => (
-                <li key={s.title} data-reveal="left" className="flex gap-5">
+                <li key={s.title} data-reveal="left" className="flex gap-4">
                   <span className="wax-seal !h-12 !w-12 shrink-0 !text-xl">{i + 1}</span>
                   <div>
-                    <h3 className="font-display text-2xl">{s.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-blush/75">{s.body}</p>
+                    <h3 className="font-display text-2xl leading-tight">{s.title}</h3>
+                    <p className="mt-1 text-base leading-relaxed text-blush/75">{s.body}</p>
                   </div>
                 </li>
               ))}
             </ol>
-            <div data-reveal="up" className="mt-10">
+            <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+              {FEATURES.map(([icon, title, body]) => (
+                <li key={title} data-reveal="up" className="flex gap-4 rounded-3xl border border-blush/15 bg-white/5 px-5 py-4">
+                  <span className="text-2xl" aria-hidden="true">{icon}</span>
+                  <span>
+                    <span className="block font-display text-xl">{title}</span>
+                    <span className="block text-sm text-blush/70">{body}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div data-reveal="up" className="mt-10 hidden lg:block">
               <ContactLinks variant="dark" compact />
             </div>
           </div>
-          <div data-reveal="scale">
+          <div data-reveal="scale" className="hidden lg:block">
             <PhoneDemo src={asset(DEMO_PATH)} />
           </div>
         </div>
@@ -290,24 +333,24 @@ function Timeline() {
     <Reveal as="section" className="relative scroll-mt-24 overflow-x-clip">
       <div id="lich" className="absolute -top-24" />
       <div className="glow blob -left-24 bottom-0 h-[380px] w-[380px] bg-peach" />
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-20 lg:grid-cols-[1fr_1.3fr] lg:items-center">
-        <div data-reveal="left" className="rounded-[2.5rem] bg-gradient-to-br from-peach via-blush to-cream p-8 shadow-[0_40px_80px_-40px_rgba(91,36,64,0.4)] sm:p-10">
+      <div className="relative mx-auto grid max-w-6xl gap-8 px-5 py-16 lg:grid-cols-[1fr_1.3fr] lg:items-center lg:py-20">
+        <div data-reveal="left" className="rounded-[2.5rem] bg-gradient-to-br from-peach via-blush to-cream p-6 shadow-[0_40px_80px_-40px_rgba(91,36,64,0.4)] sm:p-10">
           <Eyebrow>Còn lại đến 20/10</Eyebrow>
-          <div className="mt-6">
+          <div className="mt-5">
             <EventCountdown targetIso={SITE.eventDate} />
           </div>
-          <p className="mt-6 text-sm text-ink-soft">
+          <p className="mt-5 text-base text-ink-soft">
             Pre-order đóng ngày {SITE.preorderCloses}. Hoa tươi nhập theo số đơn đã chốt, nên sau ngày đó tụi mình không nhận thêm.
           </p>
         </div>
-        <ol className="space-y-5">
+        <ol className="space-y-4">
           {TIMELINE.map((t, i) => (
-            <li key={t.date} data-reveal="right" className={`soft-card flex gap-5 px-6 py-5 ${TIMELINE_OFFSET[i]}`}>
-              <span className="mt-1 h-3 w-3 shrink-0 rounded-full bg-rose shadow-[0_0_0_6px_var(--blush)]" />
+            <li key={t.date} data-reveal="right" className={`soft-card flex gap-4 px-5 py-5 ${TIMELINE_OFFSET[i]}`}>
+              <span className="mt-2 h-3 w-3 shrink-0 rounded-full bg-rose shadow-[0_0_0_6px_var(--blush)]" />
               <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-rose-deep">{t.date}</p>
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-rose-deep">{t.date}</p>
                 <h3 className="mt-1 font-display text-2xl text-plum">{t.title}</h3>
-                <p className="mt-1 text-sm text-ink-soft">{t.body}</p>
+                <p className="mt-1 text-base text-ink-soft">{t.body}</p>
               </div>
             </li>
           ))}
@@ -321,27 +364,23 @@ function Order() {
   return (
     <Reveal as="section" className="relative scroll-mt-24">
       <div id="dat-truoc" className="absolute -top-24" />
-      <div className="mx-auto max-w-6xl px-5 py-16">
-        <div data-reveal="scale" className="relative overflow-hidden rounded-[3rem] shadow-[0_60px_100px_-50px_rgba(91,36,64,0.6)]">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-5 lg:py-16">
+        <div data-reveal="scale" className="relative overflow-hidden rounded-[2.5rem] shadow-[0_60px_100px_-50px_rgba(91,36,64,0.6)] sm:rounded-[3rem]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset("/img/rose-macro.jpg")} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-br from-cream/95 via-blush/85 to-peach/80" />
           <Petals count={8} />
-          <div className="relative px-7 py-16 text-center sm:px-12 sm:py-20">
-            <p className="font-script text-7xl text-rose">Đặt trước</p>
-            <h2 className="mt-2 font-display text-3xl font-medium text-plum sm:text-4xl">
+          <div className="relative px-6 py-14 text-center sm:px-12 sm:py-20">
+            <p className="font-script text-[4.2rem] leading-none text-rose sm:text-7xl">Đặt trước</p>
+            <h2 className="mt-3 font-display text-[1.9rem] font-medium leading-tight text-plum sm:text-4xl">
               Một tin nhắn là xong. Tụi mình lo phần còn lại.
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-ink-soft">
+            <p className="mx-auto mt-4 max-w-lg text-base text-ink-soft sm:text-lg">
               Nhắn Zalo hoặc gọi, báo gói bạn chọn và ngày muốn nhận. Tụi mình xác nhận hoa, nhận cọc 50% và giữ slot giao cho bạn.
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-7 flex justify-center">
               <ContactLinks />
             </div>
-            <p className="mt-6 text-sm text-ink-soft">
-              Hoặc nhắn Facebook:{" "}
-              <a href={SITE.facebookUrl} className="underline underline-offset-4">fb.com/thanhphuong2710</a>
-            </p>
           </div>
         </div>
       </div>
@@ -353,19 +392,19 @@ function Faq() {
   return (
     <Reveal as="section" className="scroll-mt-24">
       <div id="hoi-dap" />
-      <div className="mx-auto max-w-3xl px-5 py-20">
+      <div className="mx-auto max-w-3xl px-5 py-16 lg:py-20">
         <div data-reveal="up">
           <Eyebrow>Hỏi đáp</Eyebrow>
         </div>
-        <h2 data-reveal="up" className="mt-4 font-display text-4xl font-medium text-plum">Trước khi bạn nhắn</h2>
+        <SectionTitle>Trước khi bạn nhắn</SectionTitle>
         <div className="mt-8 space-y-3">
           {FAQ.map((f) => (
-            <details key={f.q} data-reveal="up" className="group soft-card px-6 py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-xl text-plum">
+            <details key={f.q} data-reveal="up" className="group soft-card px-5 py-4 sm:px-6">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[1.3rem] leading-snug text-plum">
                 {f.q}
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-blush text-rose transition group-open:rotate-45">+</span>
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-blush text-xl text-rose transition group-open:rotate-45">+</span>
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink-soft">{f.a}</p>
+              <p className="mt-3 text-base leading-relaxed text-ink-soft">{f.a}</p>
             </details>
           ))}
         </div>
@@ -380,12 +419,12 @@ function Footer() {
       <Wave fill="var(--plum)" />
       <div className="relative overflow-hidden bg-plum text-blush/80">
         <Petals count={8} tone="dark" />
-        <div className="relative mx-auto flex max-w-6xl flex-col gap-6 px-5 pb-12 pt-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="relative mx-auto flex max-w-6xl flex-col gap-6 px-5 pb-12 pt-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="font-script text-5xl text-gold-soft">{SITE.name}</p>
-            <p className="mt-1 text-sm">{SITE.tagline}</p>
+            <p className="mt-1 text-base">{SITE.tagline}</p>
           </div>
-          <div className="text-sm">
+          <div className="text-base">
             <p>
               Zalo / Gọi: <a href={`tel:${SITE.phone}`} className="text-cream">{SITE.phoneDisplay}</a>
             </p>
@@ -403,7 +442,7 @@ export default function LandingPage() {
   return (
     <>
       <Header />
-      <main className="overflow-x-clip">
+      <main className="overflow-x-clip pb-24 lg:pb-0">
         <Hero />
         <Keeps />
         <Packages />
@@ -413,6 +452,7 @@ export default function LandingPage() {
         <Faq />
       </main>
       <Footer />
+      <MobileActionBar />
     </>
   );
 }

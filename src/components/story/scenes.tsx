@@ -26,7 +26,7 @@ export function NextButton({ onClick, label = "Tiếp" }: { onClick: () => void;
     <button
       type="button"
       onClick={onClick}
-      className="rounded-full bg-rose px-7 py-2.5 font-body text-sm font-medium text-white shadow-[0_10px_25px_-10px_rgba(200,83,111,0.9)] transition hover:bg-rose-deep"
+      className="min-h-12 rounded-full bg-rose px-8 py-3 font-body text-base font-medium text-white shadow-[0_10px_25px_-10px_rgba(200,83,111,0.9)] transition hover:bg-rose-deep"
     >
       {label}
     </button>
