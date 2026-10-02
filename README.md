@@ -65,3 +65,9 @@ Cảnh nào không có nội dung sẽ tự được bỏ qua.
 
 - **Cloudflare Pages / Netlify / Vercel**: build command `pnpm build`, output directory `out`.
 - **nginx**: copy `out/` lên server, trỏ `root` vào đó, bật `try_files $uri $uri/ /404.html;`.
+
+## Deploy lên GitHub Pages
+
+Workflow `.github/workflows/deploy.yml` tự build và deploy mỗi khi push lên `main`.
+Site nằm tại `https://<user>.github.io/<tên-repo>/`, nên build dùng `NEXT_PUBLIC_BASE_PATH=/<tên-repo>`.
+Mọi đường dẫn tới file trong `public/` phải đi qua hàm `asset()` trong `src/lib/site.ts`.

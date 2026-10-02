@@ -1,3 +1,4 @@
+import { asset } from "@/lib/site";
 import type { StoryPhoto } from "@/lib/story-types";
 
 interface BouquetProps {
@@ -44,7 +45,7 @@ export function Bouquet({ photos }: BouquetProps) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={photo.url}
+                src={asset(photo.url)}
                 alt={photo.caption}
                 className="h-[128px] w-[104px] rounded-t-full border-[3px] border-[#fff6f8] object-cover shadow-[0_10px_18px_-6px_rgba(0,0,0,0.6)]"
               />

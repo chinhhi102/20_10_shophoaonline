@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { StoryPlayer } from "@/components/story/StoryPlayer";
+import { asset } from "@/lib/site";
 import { getStoryByPath, listStories } from "@/lib/stories";
 
 export const dynamicParams = false;
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${story.title}, ${story.herName}`,
       description: "Có người gửi em một điều đặc biệt. Mở ra nhé.",
-      images: story.coverUrl ? [{ url: story.coverUrl }] : undefined,
+      images: story.coverUrl ? [{ url: asset(story.coverUrl) }] : undefined,
     },
   };
 }
