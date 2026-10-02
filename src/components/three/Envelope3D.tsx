@@ -2,13 +2,13 @@
 
 import { ContactShadows, Float, Sparkles } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 interface EnvelopeProps {
-  initial: string;
   isOpen: boolean;
-  onToggle: () => void;
+  sealTexture: THREE.Texture | null;
+  onTap: () => void;
 }
 
 const CREAM = "#fbf3ee";
@@ -50,8 +50,62 @@ function makeHeartGeometry(): THREE.ExtrudeGeometry {
   return geometry;
 }
 
+/** Vẽ chữ cái lên mặt sáp bằng canvas 2D, dùng font script của site nếu đã tải. */
+function drawSealTexture(initial: string): THREE.CanvasTexture {
+  const size = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (ctx) {
+    const grad = ctx.createRadialGradient(size * 0.35, size * 0.3, 10, size / 2, size / 2, size * 0.55);
+    grad.addColorStop(0, "#f3b4c3");
+    grad.addColorStop(0.55, "#d6617c");
+    grad.addColorStop(1, "#9a3650");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, size * 0.36, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#fde7ee";
+    ctx.font = `150px "Great Vibes", cursive`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.shadowColor = "rgba(0,0,0,0.35)";
+    ctx.shadowBlur = 6;
+    ctx.fillText(initial, size / 2, size / 2 + 10);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/** Tạo texture sáp sau khi font script đã sẵn sàng, để chữ không bị fallback. */
+function useSealTexture(initial: string): THREE.Texture | null {
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    const build = () => {
+      if (!cancelled) {
+        setTexture(drawSealTexture(initial));
+      }
+    };
+    if (document.fonts?.load) {
+      document.fonts.load('150px "Great Vibes"').then(build, build);
+    } else {
+      build();
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [initial]);
+  return texture;
+}
+
 /** Phong bì: thân, nắp xoay quanh mép trên, sáp niêm ở đầu nắp, trái tim bay lên khi mở. */
-function Envelope({ initial, isOpen, onToggle }: EnvelopeProps) {
+function Envelope({ isOpen, sealTexture, onTap }: EnvelopeProps) {
   const group = useRef<THREE.Group>(null);
   const flap = useRef<THREE.Group>(null);
   const heart = useRef<THREE.Mesh>(null);
@@ -86,7 +140,7 @@ function Envelope({ initial, isOpen, onToggle }: EnvelopeProps) {
   });
 
   return (
-    <group ref={group} onClick={onToggle} onPointerOver={() => (document.body.style.cursor = "pointer")} onPointerOut={() => (document.body.style.cursor = "")}>
+    <group ref={group} onClick={onTap} onPointerOver={() => (document.body.style.cursor = "pointer")} onPointerOut={() => (document.body.style.cursor = "")}>
       {/* trái tim nằm sau thân, bay lên khi mở */}
       <mesh ref={heart} geometry={heartGeo} position={[0, -0.1, -0.2]} scale={0.001}>
         <meshPhysicalMaterial color={ROSE} emissive={ROSE_DEEP} emissiveIntensity={0.35} clearcoat={1} clearcoatRoughness={0.15} roughness={0.3} />
@@ -110,18 +164,47 @@ function Envelope({ initial, isOpen, onToggle }: EnvelopeProps) {
         </mesh>
         <group ref={seal} position={[0, -0.72, 0.035]}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.23, 0.25, 0.07, 28]} />
+            <cylinderGeometry args={[0.25, 0.27, 0.07, 28]} />
             <meshStandardMaterial color="#d6617c" roughness={0.35} metalness={0.05} />
           </mesh>
-          <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.036]}>
-            <torusGeometry args={[0.15, 0.012, 8, 32]} />
-            <meshStandardMaterial color="#f7c5d0" roughness={0.4} />
+          {/* mặt sáp có chữ cái */}
+          <mesh position={[0, 0, 0.037]}>
+            <circleGeometry args={[0.245, 40]} />
+            {sealTexture ? (
+              <meshStandardMaterial map={sealTexture} roughness={0.35} />
+            ) : (
+              <meshStandardMaterial color="#d6617c" roughness={0.35} />
+            )}
           </mesh>
         </group>
       </group>
       {isOpen ? <Sparkles count={50} scale={[3.2, 2.6, 1.2]} size={4} speed={0.5} color="#ffd3dd" position={[0, 0.9, 0.4]} /> : null}
-      <group visible={false}>{initial}</group>
     </group>
+  );
+}
+
+interface EnvelopeCanvasProps {
+  initial: string;
+  isOpen: boolean;
+  onTap: () => void;
+  /** Màu bóng đổ dưới phong bì, chọn theo nền sáng hay tối. */
+  shadowColor?: string;
+}
+
+/** Cảnh 3D phong bì, điều khiển từ ngoài bằng isOpen. Dùng chung cho landing và trang Mãi Yêu. */
+export function EnvelopeCanvas({ initial, isOpen, onTap, shadowColor = "#5b2440" }: EnvelopeCanvasProps) {
+  const sealTexture = useSealTexture(initial);
+  return (
+    <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0.55, 5.2], fov: 36 }} gl={{ alpha: true, antialias: true }} style={{ touchAction: "pan-y" }}>
+      <ambientLight intensity={0.9} />
+      <directionalLight position={[3, 4, 5]} intensity={1.8} color="#fff4f6" />
+      <pointLight position={[-3, 2, 3]} intensity={1.4} color="#ffb6c6" />
+      <pointLight position={[2, -2, 2]} intensity={0.6} color="#ffd9c9" />
+      <Float speed={1.6} rotationIntensity={0.15} floatIntensity={0.7}>
+        <Envelope isOpen={isOpen} sealTexture={sealTexture} onTap={onTap} />
+      </Float>
+      <ContactShadows position={[0, -1.3, 0]} opacity={0.4} scale={7} blur={2.6} far={2.5} color={shadowColor} />
+    </Canvas>
   );
 }
 
@@ -130,24 +213,16 @@ interface Envelope3DProps {
   className?: string;
 }
 
-/** Khối 3D phong bì sáp niêm. Chạm để mở, nghiêng theo ngón tay. */
+/** Khối 3D phong bì cho landing: tự quản lý mở/đóng, có nút gợi ý. */
 export function Envelope3D({ initial = "♥", className = "" }: Envelope3DProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen((v) => !v);
   return (
     <div className={`relative ${className}`}>
-      <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0.55, 5.2], fov: 36 }} gl={{ alpha: true, antialias: true }} style={{ touchAction: "pan-y" }}>
-        <ambientLight intensity={0.9} />
-        <directionalLight position={[3, 4, 5]} intensity={1.8} color="#fff4f6" />
-        <pointLight position={[-3, 2, 3]} intensity={1.4} color="#ffb6c6" />
-        <pointLight position={[2, -2, 2]} intensity={0.6} color="#ffd9c9" />
-        <Float speed={1.6} rotationIntensity={0.15} floatIntensity={0.7}>
-          <Envelope initial={initial} isOpen={isOpen} onToggle={() => setIsOpen((v) => !v)} />
-        </Float>
-        <ContactShadows position={[0, -1.3, 0]} opacity={0.4} scale={7} blur={2.6} far={2.5} color="#5b2440" />
-      </Canvas>
+      <EnvelopeCanvas initial={initial} isOpen={isOpen} onTap={toggle} />
       <button
         type="button"
-        onClick={() => setIsOpen((v) => !v)}
+        onClick={toggle}
         className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/80 px-5 py-2.5 font-display text-base italic text-plum shadow-[0_12px_30px_-16px_rgba(91,36,64,0.6)] backdrop-blur"
       >
         {isOpen ? "Chạm để đóng lại" : "Chạm vào phong bì để mở"}

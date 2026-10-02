@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { prefersReducedMotion, setupGsap } from "@/components/motion/gsap";
 
 import { Petals3D } from "@/components/three/Lazy3D";
-import { Envelope } from "@/components/story/Envelope";
+import { StoryEnvelope } from "@/components/story/StoryEnvelope";
 import { SceneFrame } from "@/components/story/SceneFrame";
 import {
   AnniversaryScene,
@@ -125,7 +125,7 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
       {story.musicUrl ? <MusicToggle src={asset(story.musicUrl)} /> : null}
       <SceneFrame sceneKey={current} frameRef={frameRef}>
         {current === "envelope" ? (
-          <Envelope title={story.title} herName={story.herName} initial={initial} onOpened={goNext} />
+          <StoryEnvelope title={story.title} herName={story.herName} initial={initial} onOpened={goNext} />
         ) : null}
         {current === "teaser" ? <TeaserScene story={story} onNext={goNext} /> : null}
         {current === "anniversary" ? <AnniversaryScene story={story} onNext={goNext} /> : null}

@@ -75,7 +75,7 @@ Mọi đường dẫn tới file trong `public/` phải đi qua hàm `asset()` t
 ## Hiệu ứng 3D (three.js)
 
 - `src/components/three/PetalField.tsx`: cánh hoa 3D (instanced mesh) rơi và nghiêng theo chạm/chuột, dùng ở hero, section Mãi Yêu và trang kể chuyện.
-- `src/components/three/Envelope3D.tsx`: phong bì sáp niêm 3D, chạm để mở, trái tim bay lên kèm lấp lánh.
+- `src/components/three/Envelope3D.tsx`: phong bì sáp niêm 3D, chạm để mở, trái tim bay lên kèm lấp lánh. Dùng ở landing và làm cảnh mở đầu trang Mãi Yêu (`StoryEnvelope.tsx`), sáp in chữ cái tên cô ấy.
 - `src/components/three/Lazy3D.tsx`: chỉ tải three.js khi khối vào tầm nhìn, tự chuyển về cánh hoa 2D nếu máy không có WebGL hoặc bật "giảm chuyển động".
 
 ## SEO
