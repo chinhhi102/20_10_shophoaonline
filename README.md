@@ -77,3 +77,10 @@ Mọi đường dẫn tới file trong `public/` phải đi qua hàm `asset()` t
 - `src/components/three/PetalField.tsx`: cánh hoa 3D (instanced mesh) rơi và nghiêng theo chạm/chuột, dùng ở hero, section Mãi Yêu và trang kể chuyện.
 - `src/components/three/Envelope3D.tsx`: phong bì sáp niêm 3D, chạm để mở, trái tim bay lên kèm lấp lánh.
 - `src/components/three/Lazy3D.tsx`: chỉ tải three.js khi khối vào tầm nhìn, tự chuyển về cánh hoa 2D nếu máy không có WebGL hoặc bật "giảm chuyển động".
+
+## SEO
+
+- Metadata trong `src/app/layout.tsx`: title, description, keywords, canonical, Open Graph, Twitter card, robots.
+- `src/app/sitemap.ts` và `src/app/robots.ts` sinh `sitemap.xml`, `robots.txt` lúc build. Trang Mãi Yêu đặt `noindex` và bị chặn trong robots vì là link riêng tư.
+- `src/components/landing/StructuredData.tsx`: JSON-LD cho cửa hàng hoa (Florist), 3 gói sản phẩm kèm giá (Product/AggregateOffer) và khối hỏi đáp (FAQPage).
+- Khi đổi tên miền, chỉ cần đặt `NEXT_PUBLIC_SITE_URL` lúc build, mọi URL tuyệt đối sẽ theo.

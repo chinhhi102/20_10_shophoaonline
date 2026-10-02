@@ -108,7 +108,7 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
 
   return (
     <main
-      className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-wine px-5 py-10 text-pearl-bright"
+      className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-wine px-5 py-12 text-pearl-bright"
       style={{
         backgroundImage:
           "radial-gradient(ellipse at 50% 0%, rgba(200,83,111,0.28), transparent 60%), radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.5), transparent 60%)",
@@ -140,14 +140,27 @@ export function StoryPlayer({ story }: StoryPlayerProps) {
         ) : null}
       </SceneFrame>
       {index > 1 ? (
-        <nav className="relative z-10 mt-8 flex items-center justify-center gap-4 text-sm text-petal-soft/80">
-          <button type="button" onClick={goBack} className="min-h-11 px-3 underline underline-offset-4">
-            Quay lại
+        <nav
+          aria-label="Điều hướng câu chuyện"
+          className="relative z-10 mt-7 flex items-center justify-center gap-5 font-body text-sm text-petal-soft/80"
+        >
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 transition hover:text-pearl-bright"
+          >
+            <span aria-hidden="true">←</span> Quay lại
           </button>
-          <span aria-hidden="true">·</span>
-          <span>
-            {index} / {scenes.length - 1}
-          </span>
+          <ol className="flex items-center gap-1.5" aria-label={`Cảnh ${index} trên ${scenes.length - 1}`}>
+            {scenes.slice(1).map((key, i) => (
+              <li
+                key={key}
+                className={`h-1.5 rounded-full transition-all ${
+                  i + 1 === index ? "w-5 bg-pearl-bright" : i + 1 < index ? "w-1.5 bg-pearl-bright/70" : "w-1.5 bg-white/25"
+                }`}
+              />
+            ))}
+          </ol>
         </nav>
       ) : null}
     </main>

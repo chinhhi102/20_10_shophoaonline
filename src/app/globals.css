@@ -75,6 +75,21 @@ body {
   overflow-x: clip;
 }
 
+/* Ngắt dòng đẹp: tiêu đề cân hai vế, đoạn văn không để một từ lẻ ở cuối. */
+h1,
+h2,
+h3,
+.font-display,
+.font-script {
+  text-wrap: balance;
+}
+p,
+li,
+dd,
+figcaption {
+  text-wrap: pretty;
+}
+
 ::selection {
   background: var(--blush-deep);
   color: var(--plum);
@@ -249,5 +264,40 @@ body {
   }
   [data-reveal] {
     opacity: 1;
+  }
+}
+
+/* ---------- Trang Mãi Yêu: hệ thẻ thống nhất ---------- */
+.story-card {
+  --lace-size: 14px;
+  width: 100%;
+  max-width: 22.5rem;
+  padding: 1.75rem 1.5rem;
+  background: #fffaf7;
+  color: var(--plum);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 0 0 6px #fffaf7,
+    0 0 0 7px rgba(200, 83, 111, 0.18),
+    0 24px 50px -24px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+.story-card::before {
+  content: "";
+  position: absolute;
+  inset: -13px;
+  border-radius: 1.6rem;
+  background:
+    radial-gradient(circle, #fffaf7 55%, transparent 56%) 0 0 / var(--lace-size) var(--lace-size) repeat-x,
+    radial-gradient(circle, #fffaf7 55%, transparent 56%) 0 100% / var(--lace-size) var(--lace-size) repeat-x,
+    radial-gradient(circle, #fffaf7 55%, transparent 56%) 0 0 / var(--lace-size) var(--lace-size) repeat-y,
+    radial-gradient(circle, #fffaf7 55%, transparent 56%) 100% 0 / var(--lace-size) var(--lace-size) repeat-y;
+  z-index: -1;
+  opacity: 0.95;
+}
+@media (min-width: 640px) {
+  .story-card {
+    max-width: 26rem;
+    padding: 2.25rem 2rem;
   }
 }

@@ -5,6 +5,7 @@ import { Marquee } from "@/components/landing/Marquee";
 import { MobileActionBar } from "@/components/landing/MobileActionBar";
 import { PackageCard } from "@/components/landing/PackageCard";
 import { PhoneDemo } from "@/components/landing/PhoneDemo";
+import { StructuredData } from "@/components/landing/StructuredData";
 import { Wave } from "@/components/landing/Wave";
 import { HeroIntro } from "@/components/motion/HeroIntro";
 import { Petals } from "@/components/motion/Petals";
@@ -69,7 +70,7 @@ const FAQ = [
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
     <p
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.16em] ${
+      className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.12em] sm:px-4 sm:py-2 sm:text-[0.8rem] sm:tracking-[0.16em] ${
         light ? "bg-white/10 text-blush" : "bg-blush text-rose-deep"
       }`}
     >
@@ -83,7 +84,7 @@ function SectionTitle({ children, light = false }: { children: React.ReactNode; 
   return (
     <h2
       data-reveal="up"
-      className={`mt-4 font-display text-[2.35rem] font-semibold leading-[1.12] tracking-tight sm:text-5xl ${light ? "text-cream" : "text-plum"}`}
+      className={`mt-4 max-w-[22ch] sm:max-w-none font-display text-[2.2rem] font-semibold leading-[1.12] tracking-tight sm:text-5xl ${light ? "text-cream" : "text-plum"}`}
     >
       {children}
     </h2>
@@ -116,15 +117,15 @@ function Header() {
 
 function HeroStats() {
   return (
-    <dl className="mt-8 grid grid-cols-3 gap-3 text-sm lg:mt-10 lg:flex lg:gap-x-10">
+    <dl className="mt-8 flex flex-wrap gap-x-7 gap-y-3 lg:mt-10 lg:gap-x-10">
       {[
         ["Giao hoa", SITE.deliveryWindow],
         ["Giá từ", "299.000đ"],
-        ["Cọc", "50%"],
+        ["Cọc giữ chỗ", "50%"],
       ].map(([k, v]) => (
-        <div key={k} className="rounded-2xl bg-white/60 px-3 py-3 lg:bg-transparent lg:p-0">
+        <div key={k} className="whitespace-nowrap">
           <dt className="text-sm text-ink-soft">{k}</dt>
-          <dd className="mt-0.5 font-display text-[1.3rem] font-semibold text-plum lg:text-2xl">{v}</dd>
+          <dd className="mt-0.5 font-display text-[1.35rem] font-semibold text-plum lg:text-2xl">{v}</dd>
         </div>
       ))}
     </dl>
@@ -146,21 +147,21 @@ function Hero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-12 pt-[46svh] lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
         <div>
           <div data-hero="eyebrow">
-            <Eyebrow>20/10 · Pre-order mở từ {SITE.preorderOpens}</Eyebrow>
+            <Eyebrow>Pre-order 20/10 mở từ {SITE.preorderOpens}</Eyebrow>
           </div>
           <h1
             data-hero="title"
-            className="mt-5 font-display text-[2.9rem] font-semibold leading-[1.04] tracking-tight text-plum sm:text-6xl lg:text-7xl"
+            className="mt-5 font-display text-[2.55rem] font-semibold leading-[1.06] tracking-tight text-plum sm:text-6xl lg:text-7xl"
           >
             <span className="block">Một bó hoa,</span>
             <span className="block">một câu chuyện</span>
-            <span className="block font-script text-[3.8rem] font-normal tracking-normal text-rose sm:text-7xl lg:text-8xl">
+            <span className="block whitespace-nowrap font-script text-[3.3rem] font-normal tracking-normal text-rose sm:text-7xl lg:text-8xl">
               em giữ được mãi.
             </span>
           </h1>
           <p data-hero="copy" className="mt-5 max-w-lg text-[1.1rem] leading-relaxed text-ink sm:text-lg sm:text-ink-soft">
-            Hoa tươi giao tận nơi ngày {SITE.deliveryWindow}, kèm thiệp in hình, ảnh đóng khung, và với gói Mãi Yêu là
-            một trang web riêng kể chuyện của hai người.
+            Đặt hoa 20/10 online, giao tận nơi ngày {SITE.deliveryWindow}. Kèm thiệp in hình, ảnh đóng khung, và với gói
+            Mãi Yêu là một trang web riêng kể chuyện của hai người.
           </p>
           <div data-hero="cta" className="mt-7">
             <ContactLinks />
@@ -236,7 +237,9 @@ function Packages() {
             <div data-reveal="up">
               <Eyebrow>Ba gói cảm xúc</Eyebrow>
             </div>
-            <SectionTitle>Chọn theo người bạn muốn tặng</SectionTitle>
+            <div className="mx-auto max-w-[22ch] sm:max-w-none">
+              <SectionTitle>Chọn theo người bạn muốn tặng</SectionTitle>
+            </div>
             <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-[1.05rem] text-ink sm:text-lg sm:text-ink-soft">
               Cả ba gói đều có hoa tươi và thiệp in hình. Khác nhau ở thứ cô ấy giữ lại được sau ngày 20/10.
             </p>
@@ -248,7 +251,6 @@ function Packages() {
           </div>
         </div>
       </div>
-      <Wave fill="var(--cream)" />
     </Reveal>
   );
 }
@@ -257,7 +259,9 @@ function MaiYeu() {
   return (
     <Reveal as="section" className="relative scroll-mt-24">
       <div id="mai-yeu" className="absolute -top-24" />
-      <Wave fill="var(--plum)" />
+      <div className="bg-blush">
+        <Wave fill="var(--plum)" />
+      </div>
       <div className="relative overflow-hidden bg-plum text-cream">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -270,7 +274,7 @@ function MaiYeu() {
         <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-28">
           <div>
             <div data-reveal="up">
-              <Eyebrow light>Gói Mãi Yêu hoạt động thế nào</Eyebrow>
+              <Eyebrow light>Cách gói Mãi Yêu hoạt động</Eyebrow>
             </div>
             <SectionTitle light>
               Một trang web <span className="font-script text-[3.4rem] font-normal text-gold-soft sm:text-6xl">chỉ cô ấy</span> mở được
@@ -448,6 +452,7 @@ function Footer() {
 export default function LandingPage() {
   return (
     <>
+      <StructuredData faq={FAQ} />
       <Header />
       <main className="overflow-x-clip pb-24 lg:pb-0">
         <Hero />
