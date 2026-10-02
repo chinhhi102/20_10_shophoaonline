@@ -45,6 +45,8 @@ const TIMELINE = [
   { date: "19 – 20/10", title: "Giao hoa", body: "Giao đúng giờ hẹn. Đổi bó mới nếu hoa dập trong lúc giao." },
 ];
 
+const TIMELINE_OFFSET = ["", "sm:ml-5", "sm:ml-10"];
+
 const FAQ = [
   { q: "Đặt sớm có lợi gì?", a: "Giữ được mẫu hoa bạn chọn và slot giao đúng khung giờ. Số lượng hoa tươi tụi mình nhập theo đơn đã chốt, cận lễ sẽ không nhận thêm." },
   { q: "Trang web Mãi Yêu tồn tại bao lâu?", a: "Ít nhất một năm. Link chỉ mở được khi có đúng mã riêng, không ai tìm thấy trên Google." },
@@ -164,7 +166,7 @@ function Hero() {
 
 function Keeps() {
   return (
-    <Reveal as="section" className="relative">
+    <Reveal as="section" className="relative overflow-x-clip">
       <div className="glow blob -right-32 top-20 h-[420px] w-[420px] bg-blush" />
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-24 lg:grid-cols-[0.9fr_1.1fr]">
         <div data-reveal="left" className="relative mx-auto w-full max-w-[460px]">
@@ -188,8 +190,7 @@ function Keeps() {
               <div
                 key={k.fear}
                 data-reveal="right"
-                className="soft-card px-6 py-5"
-                style={{ marginLeft: `${(i % 2) * 20}px` }}
+                className={`soft-card px-6 py-5 ${i % 2 === 1 ? "sm:ml-5" : ""}`}
               >
                 <p className="font-display text-xl italic text-plum">“{k.fear}”</p>
                 <p className="mt-2 text-sm leading-relaxed text-ink-soft">{k.answer}</p>
@@ -286,7 +287,7 @@ function MaiYeu() {
 
 function Timeline() {
   return (
-    <Reveal as="section" className="relative scroll-mt-24">
+    <Reveal as="section" className="relative scroll-mt-24 overflow-x-clip">
       <div id="lich" className="absolute -top-24" />
       <div className="glow blob -left-24 bottom-0 h-[380px] w-[380px] bg-peach" />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-20 lg:grid-cols-[1fr_1.3fr] lg:items-center">
@@ -301,7 +302,7 @@ function Timeline() {
         </div>
         <ol className="space-y-5">
           {TIMELINE.map((t, i) => (
-            <li key={t.date} data-reveal="right" className="soft-card flex gap-5 px-6 py-5" style={{ marginLeft: `${i * 18}px` }}>
+            <li key={t.date} data-reveal="right" className={`soft-card flex gap-5 px-6 py-5 ${TIMELINE_OFFSET[i]}`}>
               <span className="mt-1 h-3 w-3 shrink-0 rounded-full bg-rose shadow-[0_0_0_6px_var(--blush)]" />
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-rose-deep">{t.date}</p>
@@ -402,7 +403,7 @@ export default function LandingPage() {
   return (
     <>
       <Header />
-      <main>
+      <main className="overflow-x-clip">
         <Hero />
         <Keeps />
         <Packages />
